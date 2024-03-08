@@ -645,7 +645,7 @@ Group admins/group owners do not need these commands.
 Visit @{SUPPORT_CHAT} for more information.
 """
 
-AUTHORITY_HANDLER = CommandHandler(("authority", "authorities", authorities, run_async=True)
+AUTHORITY_HANDLER = CommandHandler(("authority", "authorities"), authorities, run_async=True)
 SUDO_HANDLER = CommandHandler(("addsudo"), addsudo, run_async=True)
 SUPPORT_HANDLER = CommandHandler(("addsupport", "adddemon"), addsupport, run_async=True)
 TIGER_HANDLER = CommandHandler(("addtiger"), addtiger, run_async=True)
