@@ -88,7 +88,7 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
             )
         )
 
-    COLUMN_SIZE = 4
+    COLUMN_SIZE = 6
 
     max_num_pages = ceil(len(pairs) / COLUMN_SIZE)
     modulo_page = page_n % max_num_pages
@@ -100,12 +100,15 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
         ] + [
             (
                 EqInlineKeyboardButton(
-                    "‹",
+                    "❮",
                     callback_data="{}_prev({})".format(prefix, modulo_page),
                 ),
-
                 EqInlineKeyboardButton(
-                    "›",
+                    "Back",
+                    callback_data="start_back",
+                ),
+                EqInlineKeyboardButton(
+                    "❯",
                     callback_data="{}_next({})".format(prefix, modulo_page),
                 ),
             )
