@@ -525,7 +525,7 @@ def devlist(update: Update, context: CallbackContext):
             pass
     m.edit_text(reply, parse_mode=ParseMode.HTML)
 
-@whitlelist_plus
+@whitelist_plus
 async def authorities(update: Update, context: CallbackContext):
     try:
         owner = await get_chat_member(context, OWNER_ID)
