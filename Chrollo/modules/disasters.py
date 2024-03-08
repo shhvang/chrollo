@@ -61,7 +61,7 @@ def get_users_info(context: CallbackContext, user_ids):
 def get_users_list(context: CallbackContext, user_ids):
     return [
         f"• {mention_html(name, user_id)} (<code>{user_id}</code>)"
-        for name, user_id in await get_users_info(context, user_ids)
+        for name, user_id in get_users_info(context, user_ids)
     ]
 
 
