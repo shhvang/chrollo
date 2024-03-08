@@ -552,8 +552,11 @@ def devlist(update: Update, context: CallbackContext):
 @whitelist_plus
 def authorities(update: Update, context: CallbackContext):
     bot = context.bot
-    reply = f"<u><b>Authorities</b><u>\n\n<b>Author of the Creation 🌱</b>\n刻 [𝘚𝘩𝘪𝘷𝘢𝘯𝘨](https://t.me/shhvang)\n ⼀ Owner\n\n"
-
+    try:
+        reply = f"<u><b>Authorities</b><u>\n\n<b>Author of the Creation 🌱</b>\n刻 [𝘚𝘩𝘪𝘷𝘢𝘯𝘨](https://t.me/shhvang)\n ⼀ Owner\n\n"
+    except TelegramError:
+        pass
+        
     true_dev = list(set(DEV_USERS) - {OWNER_ID})
     reply += "<b>⼀ Dimensions</b>\n"
     for each_user in true_dev:
@@ -600,7 +603,6 @@ def authorities(update: Update, context: CallbackContext):
             reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
         except TelegramError:
             pass
-
 
     
       
