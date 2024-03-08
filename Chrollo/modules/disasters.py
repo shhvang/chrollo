@@ -528,8 +528,8 @@ def devlist(update: Update, context: CallbackContext):
 @whitelist_plus
 def authorities(update: Update, context: CallbackContext):
     try:
-        owner = await get_chat_member(context, OWNER_ID)
-        owner_info = await mention_html(owner.user.first_name, owner.user.id)
+        owner = get_chat_member(context, OWNER_ID)
+        owner_info = mention_html(owner.user.first_name, owner.user.id)
         reply = f"<b><u>Authority of Creation</u></b>\n {owner_info} (<code>{OWNER_ID}</code>)\n"
     except TelegramError as e:
         LOGGER.error(f"Error getting owner information: {e}")
@@ -537,19 +537,19 @@ def authorities(update: Update, context: CallbackContext):
 
     true_dev = list(set(DEV_USERS) - {OWNER_ID})
     reply += "\n\n<b><u>Authorities of the Dimensions</u></b>\n"
-    reply += "\n".join(await get_users_list(context, true_dev)) or "No Heirs of the Authority of the Dimensions"
+    reply += "\n".join(await get_users_list(context, true_dev)) or "No Known Heirs of the Authority of the Dimensions"
 
     true_sudo = list(set(DRAGONS) - set(DEV_USERS))
     reply += "\n\n<b><u>Authorities of the Dragons</u></b>\n"
-    reply += "\n".join(await get_users_list(context, true_sudo)) or "No Heirs of the Authority of the Dragons"
+    reply += "\n".join(get_users_list(context, true_sudo)) or "No Known Heirs of the Authority of the Dragons"
 
     reply += "\n\n<b>Authorities of the Demons</b>\n"
-    reply += "\n".join(await get_users_list(context, DEMONS)) or "No Heirs of the Authority of the Demons"
+    reply += "\n".join(get_users_list(context, DEMONS)) or "No Known Heirs of the Authority of the Demons"
 
     reply += "\n\n<b><u>Authorities of the Wolves</u></b>\n"
     reply += (
-        "\n".join(await get_users_list(context, WOLVES))
-        or "No Heirs of the Authority of the Wolves"
+        "\n".join(get_users_list(context, WOLVES))
+        or "No Known Heirs of the Authority of the Wolves"
     )
 
       
