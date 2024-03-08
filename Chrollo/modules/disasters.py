@@ -537,7 +537,7 @@ def authorities(update: Update, context: CallbackContext):
 
     true_dev = list(set(DEV_USERS) - {OWNER_ID})
     reply += "\n\n<b><u>Authorities of the Dimensions</u></b>\n"
-    reply += "\n".join(await get_users_list(context, true_dev)) or "No Known Heirs of the Authority of the Dimensions"
+    reply += "\n".join(get_users_list(context, true_dev)) or "No Known Heirs of the Authority of the Dimensions"
 
     true_sudo = list(set(DRAGONS) - set(DEV_USERS))
     reply += "\n\n<b><u>Authorities of the Dragons</u></b>\n"
