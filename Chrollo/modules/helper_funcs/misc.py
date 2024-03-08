@@ -13,7 +13,8 @@ from telegram import (
 )
 from telegram.error import TelegramError
 
-from Chrollo import NO_LOAD
+from FallenRobot import NO_LOAD
+
 
 class EqInlineKeyboardButton(InlineKeyboardButton):
     def __eq__(self, other):
@@ -89,7 +90,7 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
                 EqInlineKeyboardButton(
                     "‹", callback_data="{}_prev({})".format(prefix, modulo_page)
                 ),
-                EqInlineKeyboardButton("ˆModulesˆ", callback_data=""),
+                EqInlineKeyboardButton("ˆ Modules ˆ", callback_data="fallen_back"),
                 EqInlineKeyboardButton(
                     "›", callback_data="{}_next({})".format(prefix, modulo_page)
                 ),
@@ -97,7 +98,7 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
         ]
 
     else:
-        pairs += [[EqInlineKeyboardButton("Retreat", callback_data="Chrollo_back")]]
+        pairs += [[EqInlineKeyboardButton("Retreat", callback_data="fallen_back")]]
 
     return pairs
 
