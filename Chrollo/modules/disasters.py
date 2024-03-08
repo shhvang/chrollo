@@ -552,9 +552,6 @@ def devlist(update: Update, context: CallbackContext):
 @whitelist_plus
 def authorities(update: Update, context: CallbackContext):
     bot = context.bot
-    m = update.effective_message.reply_text(
-        "<code>Fetching Authorities...</code>", parse_mode=ParseMode.HTML
-    )
     reply = f"<u><b>Authorities</b><u>\n\n<b>Author of the Creation 🌱</b>\n刻 [𝘚𝘩𝘪𝘷𝘢𝘯𝘨](https://t.me/shhvang)\n ⼀ Owner\n\n"
 
     true_dev = list(set(DEV_USERS) - {OWNER_ID})
@@ -604,7 +601,6 @@ def authorities(update: Update, context: CallbackContext):
         except TelegramError:
             pass
 
-    m.edit_text(reply, parse_mode=ParseMode.HTML)
 
     
       
