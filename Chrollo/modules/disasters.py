@@ -201,7 +201,7 @@ def addwhitelist(update: Update, context: CallbackContext) -> str:
         data = json.load(infile)
 
     if user_id in DRAGONS:
-        rt += "This member is a Dragon Disaster, Demoting to Wolf."
+        rt += "This member is a Dragon disaster, Demoting to Wolf."
         data["sudos"].remove(user_id)
         DRAGONS.remove(user_id)
 
@@ -556,51 +556,53 @@ def authorities(update: Update, context: CallbackContext):
         "<code>...</code>", parse_mode=ParseMode.HTML
     )
 
-    reply = f"<b><u>Author of the Creation</u></b>\n[𝘚𝘩𝘪𝘷𝘢𝘯𝘨](https://t.me/{OWNER_ID})\n"
+    reply = "<u><b>Authorities</b><u>\n\n"
+
+    reply += f"<b>Author of the Creation 🌱</b>\n刻 𝘚𝘩𝘪𝘷𝘢𝘯𝘨\n ⼀ @shhvang\n\n"
 
     true_dev = list(set(DEV_USERS) - {OWNER_ID})
-    reply += "<b>Authority of the Dimensions:</b>\n"
+    reply += "<b>⼀ Dimensions</b>\n"
     for each_user in true_dev:
         user_id = int(each_user)
         try:
             user = bot.get_chat(user_id)
-            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n\n"
         except TelegramError:
             pass
     m.edit_text(reply, parse_mode=ParseMode.HTML)
     
     true_sudo = list(set(DRAGONS) - set(DEV_USERS))
-    reply += "<b>Authority of the Dragons :</b>\n"
+    reply += "<b>⼀ Monarchs</b>\n"
     for each_user in true_sudo:
         user_id = int(each_user)
         try:
             user = bot.get_chat(user_id)
-            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n\n"
         except TelegramError:
             pass
     m.edit_text(reply, parse_mode=ParseMode.HTML)
 
-    reply += "<b>Authority of the Demons :</b>\n"
+    reply += "<b>⼀ Demons</b>\n"
     for each_user in DEMONS:
         user_id = int(each_user)
         try:
             user = bot.get_chat(user_id)
-            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n\n"
         except TelegramError:
             pass
     m.edit_text(reply, parse_mode=ParseMode.HTML)
 
-    text += "<b>Authority of the Tigers :</b>\n"
+    reply += "<b>⼀ Ronins</b>\n"
     for each_user in TIGERS:
         user_id = int(each_user)
         try:
             user = bot.get_chat(user_id)
-            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n\n"
         except TelegramError:
             pass
     m.edit_text(reply, parse_mode=ParseMode.HTML)
 
-    text += "<b>Authority of the Wolves :</b>\n"
+    reply += "<b>⼀ Ninjas</b>\n"
     for each_user in WOLVES:
         user_id = int(each_user)
         try:
@@ -618,11 +620,13 @@ Commands listed here only work for users with special access are mainly used for
 Group admins/group owners do not need these commands.
 
 *List all special users:*
- ❍ /sudolist*:* Lists all Dragon disasters
- ❍ /supportlist*:* Lists all Demon disasters
- ❍ /tigers*:* Lists all Tigers disasters
- ❍ /wolves*:* Lists all Wolf disasters
- ❍ /devlist*:* Lists all Hero Association members
+
+ ❍ /authority*:* List of All Authorities
+ ❍ /monarchs*:* Lists all Monarchs (Dragons)
+ ❍ /knights*:* Lists all Knights (Demons)
+ ❍ /ronins*:* Lists all Ronins (Tigers)
+ ❍ /ninjas*:* Lists all Ninjas (Wolves)
+ ❍ /dimensions*:* List of the Dimensions (Devs)
  ❍ /addsudo*:* Adds a user to Dragon
  ❍ /adddemon*:* Adds a user to Demon
  ❍ /addtiger*:* Adds a user to Tiger
@@ -714,12 +718,12 @@ UNWHITELIST_HANDLER = CommandHandler(
     ("removewhitelist", "removewolf"), removewhitelist, run_async=True
 )
 WHITELISTLIST_HANDLER = CommandHandler(
-    ["whitelistlist", "wolves"], whitelistlist, run_async=True
+    ["whitelistlist", "wolves", "ninjas"], whitelistlist, run_async=True
 )
-TIGERLIST_HANDLER = CommandHandler(["tigers"], tigerlist, run_async=True)
-SUPPORTLIST_HANDLER = CommandHandler("supportlist", supportlist, run_async=True)
-SUDOLIST_HANDLER = CommandHandler("sudolist", sudolist, run_async=True)
-DEVLIST_HANDLER = CommandHandler("devlist", devlist, run_async=True)
+TIGERLIST_HANDLER = CommandHandler(["tigers", "ronins"], tigerlist, run_async=True)
+SUPPORTLIST_HANDLER = CommandHandler(("supportlist", "demons", "knights"), supportlist, run_async=True)
+SUDOLIST_HANDLER = CommandHandler(("sudolist", "monarchs"), sudolist, run_async=True)
+DEVLIST_HANDLER = CommandHandler(("devlist", "dimensions"), devlist, run_async=True)
 
 dispatcher.add_handler(AUTHORITY_HANDLER)
 dispatcher.add_handler(SUDO_HANDLER)
