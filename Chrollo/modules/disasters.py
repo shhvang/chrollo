@@ -552,10 +552,11 @@ def devlist(update: Update, context: CallbackContext):
 @whitelist_plus
 def authorities(update: Update, context: CallbackContext):
     bot = context.bot
+    m = update.effective_message.reply_text(
+        "<code>Fetching Authorities...</code>", parse_mode=ParseMode.HTML
+    )
 
-    reply = "<u><b>Authorities</b><u>\n\n"
-
-    reply += f"<b>Author of the Creation 🌱</b>\n刻 𝘚𝘩𝘪𝘷𝘢𝘯𝘨\n ⼀ @shhvang\n\n"
+    reply = f"<u><b>Authorities</b><u>\n\n<b>Author of the Creation 🌱</b>\n刻 [𝘚𝘩𝘪𝘷𝘢𝘯𝘨](https://t.me/shhvang)\n ⼀ Owner\n\n"
 
     true_dev = list(set(DEV_USERS) - {OWNER_ID})
     reply += "<b>⼀ Dimensions</b>\n"
@@ -563,39 +564,43 @@ def authorities(update: Update, context: CallbackContext):
         user_id = int(each_user)
         try:
             user = bot.get_chat(user_id)
-            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n\n"
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
         except TelegramError:
             pass
+    m.edit_text(reply, parse_mode=ParseMode.HTML)
     
     true_sudo = list(set(DRAGONS) - set(DEV_USERS))
-    reply += "<b>⼀ Monarchs</b>\n"
+    reply += "<b>\n\n⼀ Monarchs</b>\n"
     for each_user in true_sudo:
         user_id = int(each_user)
         try:
             user = bot.get_chat(user_id)
-            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n\n"
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
         except TelegramError:
             pass
+    m.edit_text(reply, parse_mode=ParseMode.HTML)
 
-    reply += "<b>⼀ Demons</b>\n"
+    reply += "<b>\n\n⼀ Demons</b>\n"
     for each_user in DEMONS:
         user_id = int(each_user)
         try:
             user = bot.get_chat(user_id)
-            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n\n"
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
         except TelegramError:
             pass
+    m.edit_text(reply, parse_mode=ParseMode.HTML)
 
-    reply += "<b>⼀ Ronins</b>\n"
+    reply += "<b>\n\n⼀ Ronins</b>\n"
     for each_user in TIGERS:
         user_id = int(each_user)
         try:
             user = bot.get_chat(user_id)
-            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n\n"
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
         except TelegramError:
             pass
+    m.edit_text(reply, parse_mode=ParseMode.HTML)
 
-    reply += "<b>⼀ Ninjas</b>\n"
+    reply += "<b>\n\n⼀ Ninjas</b>\n"
     for each_user in WOLVES:
         user_id = int(each_user)
         try:
@@ -603,6 +608,7 @@ def authorities(update: Update, context: CallbackContext):
             reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
         except TelegramError:
             pass
+    m.edit_text(reply, parse_mode=ParseMode.HTML)
 
     
       
