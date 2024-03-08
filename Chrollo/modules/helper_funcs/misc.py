@@ -75,7 +75,7 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
 
     pairs = [modules[i * 3 : (i + 1) * 3] for i in range((len(modules) + 3 - 1) // 3)]
 
-    round_num = len(modules) / 5
+    round_num = len(modules) / 3
     calc = len(modules) - round(round_num)
     if calc in [1, 2]:
         pairs.append((modules[-1],))
@@ -90,7 +90,7 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
                 EqInlineKeyboardButton(
                     "◁", callback_data="{}_prev({})".format(prefix, modulo_page)
                 ),
-                EqInlineKeyboardButton("Home", callback_data="chrollo_back"),
+                EqInlineKeyboardButton("Home", callback_data="fallen_back"),
                 EqInlineKeyboardButton(
                     "▷", callback_data="{}_next({})".format(prefix, modulo_page)
                 ),
@@ -98,7 +98,7 @@ def paginate_modules(page_n: int, module_dict: Dict, prefix, chat=None) -> List:
         ]
 
     else:
-        pairs += [[EqInlineKeyboardButton("Retreat", callback_data="chrollo_back")]]
+        pairs += [[EqInlineKeyboardButton("Retreat", callback_data="fallen_back")]]
 
     return pairs
 
