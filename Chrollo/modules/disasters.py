@@ -41,6 +41,30 @@ def check_user_id(user_id: int, context: CallbackContext) -> Optional[str]:
     return reply
 
 
+def get_chat_member(context: CallbackContext, user_id):
+    try:
+        return context.bot.get_chat_member(user_id, user_id)
+    except TelegramError as e:
+        LOGGER.error(f"Error getting chat member {user_id}: {e}")
+        return None
+
+
+def get_user_info(context: CallbackContext, user_id):
+    user_info = get_chat_member(context, user_id)
+    return user_info.user.first_name if user_info else "Unknown User"
+
+
+def get_users_info(context: CallbackContext, user_ids):
+    return [(get_user_info(context, user_id), user_id) for user_id in user_ids]
+
+
+def get_users_list(context: CallbackContext, user_ids):
+    return [
+        f"• {mention_html(name, user_id)} (<code>{user_id}</code>)"
+        for name, user_id in await get_users_info(context, user_ids)
+    ]
+
+
 @dev_plus
 @gloggable
 def addsudo(update: Update, context: CallbackContext) -> str:
