@@ -552,6 +552,9 @@ def devlist(update: Update, context: CallbackContext):
 @whitelist_plus
 def authorities(update: Update, context: CallbackContext):
     bot = context.bot
+    txt = update.effective_message.reply_text(
+        "<code>Fetching Authorities...</code>", parse_mode=ParseMode.HTML
+    )
     try:
         reply = f"<u><b>Authorities</b><u>\n\n<b>Author of the Creation 🌱</b>\n刻 [𝘚𝘩𝘪𝘷𝘢𝘯𝘨](https://t.me/shhvang)\n ⼀ Owner\n\n"
     except TelegramError:
@@ -603,9 +606,10 @@ def authorities(update: Update, context: CallbackContext):
             reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
         except TelegramError:
             pass
+            
+    txt.edit_text(reply, parse_mode=ParseMode.HTML)
 
-    
-      
+          
 __help__ = f"""
 *⚠️ Notice:*
 Commands listed here only work for users with special access are mainly used for troubleshooting, debugging purposes.
