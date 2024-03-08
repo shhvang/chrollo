@@ -552,9 +552,6 @@ def devlist(update: Update, context: CallbackContext):
 @whitelist_plus
 def authorities(update: Update, context: CallbackContext):
     bot = context.bot
-    m = update.effective_message.reply_text(
-        "<code>...</code>", parse_mode=ParseMode.HTML
-    )
 
     reply = "<u><b>Authorities</b><u>\n\n"
 
@@ -569,7 +566,6 @@ def authorities(update: Update, context: CallbackContext):
             reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n\n"
         except TelegramError:
             pass
-    m.edit_text(reply, parse_mode=ParseMode.HTML)
     
     true_sudo = list(set(DRAGONS) - set(DEV_USERS))
     reply += "<b>⼀ Monarchs</b>\n"
@@ -580,7 +576,6 @@ def authorities(update: Update, context: CallbackContext):
             reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n\n"
         except TelegramError:
             pass
-    m.edit_text(reply, parse_mode=ParseMode.HTML)
 
     reply += "<b>⼀ Demons</b>\n"
     for each_user in DEMONS:
@@ -590,7 +585,6 @@ def authorities(update: Update, context: CallbackContext):
             reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n\n"
         except TelegramError:
             pass
-    m.edit_text(reply, parse_mode=ParseMode.HTML)
 
     reply += "<b>⼀ Ronins</b>\n"
     for each_user in TIGERS:
@@ -600,7 +594,6 @@ def authorities(update: Update, context: CallbackContext):
             reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n\n"
         except TelegramError:
             pass
-    m.edit_text(reply, parse_mode=ParseMode.HTML)
 
     reply += "<b>⼀ Ninjas</b>\n"
     for each_user in WOLVES:
@@ -610,7 +603,6 @@ def authorities(update: Update, context: CallbackContext):
             reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
         except TelegramError:
             pass
-    m.edit_text(reply, parse_mode=ParseMode.HTML)
 
     
       
