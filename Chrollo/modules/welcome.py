@@ -920,7 +920,7 @@ def user_button(update: Update, context: CallbackContext):
         bot.restrict_chat_member(
             chat.id,
             user.id,
-            permissions=Chat permissions (
+            permissions=Chatpermissions(
                 can_send_messages=True,
                 can_invite_users=True,
                 can_pin_messages=True,
