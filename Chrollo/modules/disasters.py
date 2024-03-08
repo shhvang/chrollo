@@ -551,13 +551,9 @@ def devlist(update: Update, context: CallbackContext):
 
 @whitelist_plus
 def authorities(update: Update, context: CallbackContext):
-    try:
-        owner = get_chat_member(context, OWNER_ID)
-        owner_info = mention_html(owner.user.first_name, owner.user.id)
-        reply = f"<b><u>Authority of Creation</u></b>\n {owner_info} (<code>{OWNER_ID}</code>)\n"
-    except TelegramError as e:
-        LOGGER.error(f"Error getting owner information: {e}")
-        reply = ""
+    owner = get_chat_member(context, OWNER_ID)
+    owner_info = mention_html(owner.user.first_name, owner.user.id)
+    reply = f"<b><u>Authority of Creation</u></b>\n {owner_info} (<code>{OWNER_ID}</code>)\n"
 
     true_dev = list(set(DEV_USERS) - {OWNER_ID})
     reply += "\n\n<b><u>Authorities of the Dimensions</u></b>\n"
