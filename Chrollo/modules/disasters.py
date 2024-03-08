@@ -525,6 +525,39 @@ def devlist(update: Update, context: CallbackContext):
             pass
     m.edit_text(reply, parse_mode=ParseMode.HTML)
 
+@support_plus
+async def authorities(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    try:
+        owner = await get_chat_member(context, OWNER_ID)
+        owner_info = await mention_html(owner.user.first_name, owner.user.id)
+        reply = f"<b><u>Authority of Creation</u></b>\n {owner_info} (<code>{OWNER_ID}</code>)\n"
+    except TelegramError as e:
+        LOGGER.error(f"Error getting owner information: {e}")
+        reply = ""
+
+    true_dev = list(set(DEV_USERS) - {OWNER_ID})
+    reply += "\n\n<b><u>Authorities of the Dimensions</u></b>\n"
+    reply += "\n".join(await get_users_list(context, true_dev)) or "No Heirs of the Authority of the Dimensions"
+
+    true_sudo = list(set(DRAGONS) - set(DEV_USERS))
+    reply += "\n\n<b><u>Authorities of the Dragons</u></b>\n"
+    reply += "\n".join(await get_users_list(context, true_sudo)) or "No Heirs of the Authority of the Dragons"
+
+    reply += "\n\n<b>Authorities of the Demons</b>\n"
+    reply += "\n".join(await get_users_list(context, DEMONS)) or "No Heirs of the Authority of the Demons"
+
+    reply += "\n\n<b><u>Authorities of the Wolves</u></b>\n"
+    reply += (
+        "\n".join(await get_users_list(context, WOLVES))
+        or "No Heirs of the Authority of the Wolves"
+    )
+
+    await update.message.reply_text(reply, parse_mode=ParseMode.HTML)
+    LOGGER.info(
+        f"{update.message.from_user.id} fetched botstaff in {update.message.chat.id}"
+    )
+
+
 
 __help__ = f"""
 *⚠️ Notice:*
@@ -612,6 +645,7 @@ Group admins/group owners do not need these commands.
 Visit @{SUPPORT_CHAT} for more information.
 """
 
+AUTHORITY_HANDLER = CommandHandler(("authority", "authorities", authorities, run_async=True)
 SUDO_HANDLER = CommandHandler(("addsudo"), addsudo, run_async=True)
 SUPPORT_HANDLER = CommandHandler(("addsupport", "adddemon"), addsupport, run_async=True)
 TIGER_HANDLER = CommandHandler(("addtiger"), addtiger, run_async=True)
@@ -634,6 +668,7 @@ SUPPORTLIST_HANDLER = CommandHandler("supportlist", supportlist, run_async=True)
 SUDOLIST_HANDLER = CommandHandler("sudolist", sudolist, run_async=True)
 DEVLIST_HANDLER = CommandHandler("devlist", devlist, run_async=True)
 
+dispatcher.add_handler(AUTHORITY_HANDLER)
 dispatcher.add_handler(SUDO_HANDLER)
 dispatcher.add_handler(SUPPORT_HANDLER)
 dispatcher.add_handler(TIGER_HANDLER)
@@ -650,6 +685,7 @@ dispatcher.add_handler(DEVLIST_HANDLER)
 
 __mod_name__ = "Devs"
 __handlers__ = [
+    AUTHORITY_HANDLER,
     SUDO_HANDLER,
     SUPPORT_HANDLER,
     TIGER_HANDLER,
