@@ -226,7 +226,7 @@ def info(update: Update, context: CallbackContext):
     rep = message.reply_text("<code>Appraising...</code>", parse_mode=ParseMode.HTML)
 
     text = (
-        f"            <u>User Information</u>            \n"
+        f"            <b><u>User Information</u></b>\n"
         f"» <b>User ID : </b> <code>{user.id}</code>\n"
         f"» <b>First Name : </b> {html.escape(user.first_name)}"
     )
@@ -255,17 +255,17 @@ def info(update: Update, context: CallbackContext):
         text += f"\n\n<b> Health : </b> <code>{userhp['earnedhp']}/{userhp['totalhp']}</code>\n[<i>{make_bar(int(userhp['percentage']))} </i>{userhp['percentage']}%]"
 
     if user.id == OWNER_ID:
-        text += "\n\nThis User holds the Authority of the Reality\nHe is the one who created my little Universe"
+        text += "\n\n<b>This User is the Creator of My Little Universe</b>\n\nJust as I coded him 👽 - @shhvang"
     elif user.id in DEV_USERS:
-        text += "\n\nThis User holds the Authority of the Dimensions\n"
+        text += "\n\n<b>This User holds the Authority of the Dimensions</b>\n"
     elif user.id in DRAGONS:
-        text += "\n\nThis User holds the Authority of the Dragons\n"
+        text += "\n\n<b>This User holds the Authority of the Dragons</b>\n"
     elif user.id in DEMONS:
-        text += "\n\nThis User holds the Authority of the Demons\n"
+        text += "\n\n<b>This User holds the Authority of the Demons</b>\n"
     elif user.id in TIGERS:
         text += "\n\nThis User holds the Authority of the Tigers\n"
     elif user.id in WOLVES:
-        text += "\n\nThis User holds the Authority of the Wolves\n"
+        text += "\n\n<b>This User holds the Authority of the Wolves</b>\n"
 
     try:
         user_member = chat.get_member(user.id)
@@ -301,10 +301,10 @@ def info(update: Update, context: CallbackContext):
                     [
                         [
                             InlineKeyboardButton(
-                                "Health", url="https://t.me/iologs/9"
+                                "Health", url="https://t.me/iologs/10"
                             ),
                             InlineKeyboardButton(
-                                "Authority", url="https://t.me/iologs/10"
+                                "Authority", url="https://t.me/iologs/9"
                             ),
                         ],
                     ]
