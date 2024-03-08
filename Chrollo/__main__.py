@@ -201,9 +201,8 @@ def start(update: Update, context: CallbackContext):
 
         else:
             first_name = update.effective_user.first_name
-            update.effective_message.reply_photo(
-                "https://telegra.ph/file/11223b2cc4451a8d9a6d7.jpg"
-            )
+            update.effective_message.reply_photo(START_IMG)
+      
             update.effective_message.reply_text(
                 PM_START_TEXT.format(escape_markdown(first_name), BOT_NAME),
                 reply_markup=InlineKeyboardMarkup(buttons),
