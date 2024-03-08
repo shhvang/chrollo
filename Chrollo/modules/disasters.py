@@ -526,7 +526,7 @@ def devlist(update: Update, context: CallbackContext):
     m.edit_text(reply, parse_mode=ParseMode.HTML)
 
 @sudo_plus
-async def authorities(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def authorities(update: Update, context: CallbackContext):
     try:
         owner = await get_chat_member(context, OWNER_ID)
         owner_info = await mention_html(owner.user.first_name, owner.user.id)
