@@ -4,8 +4,8 @@ import importlib
 from telegram import ParseMode, Update
 from telegram.ext import CallbackContext, CommandHandler
 
-from ChrolloRobot import dispatcher, telethn
-from ChrolloRobot.__main__ import (
+from Chrollo import dispatcher, telethn
+from Chrollo.__main__ import (
     CHAT_SETTINGS,
     DATA_EXPORT,
     DATA_IMPORT,
@@ -16,7 +16,7 @@ from ChrolloRobot.__main__ import (
     USER_INFO,
     USER_SETTINGS,
 )
-from ChrolloRobot.modules.helper_funcs.chat_status import dev_plus, sudo_plus
+from Chrollo.modules.helper_funcs.chat_status import dev_plus, sudo_plus
 
 
 @dev_plus
