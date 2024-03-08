@@ -551,27 +551,66 @@ def devlist(update: Update, context: CallbackContext):
 
 @whitelist_plus
 def authorities(update: Update, context: CallbackContext):
-    owner = get_chat_member(context, OWNER_ID)
-    owner_info = mention_html(owner.user.first_name, owner.user.id)
-    reply = f"<b><u>Authority of Creation</u></b>\n {owner_info} (<code>{OWNER_ID}</code>)\n"
-
-    true_dev = list(set(DEV_USERS) - {OWNER_ID})
-    reply += "\n\n<b><u>Authorities of the Dimensions</u></b>\n"
-    reply += "\n".join(get_users_list(context, true_dev)) or "No Known Heirs of the Authority of the Dimensions"
-
-    true_sudo = list(set(DRAGONS) - set(DEV_USERS))
-    reply += "\n\n<b><u>Authorities of the Dragons</u></b>\n"
-    reply += "\n".join(get_users_list(context, true_sudo)) or "No Known Heirs of the Authority of the Dragons"
-
-    reply += "\n\n<b>Authorities of the Demons</b>\n"
-    reply += "\n".join(get_users_list(context, DEMONS)) or "No Known Heirs of the Authority of the Demons"
-
-    reply += "\n\n<b><u>Authorities of the Wolves</u></b>\n"
-    reply += (
-        "\n".join(get_users_list(context, WOLVES))
-        or "No Known Heirs of the Authority of the Wolves"
+    bot = context.bot
+    m = update.effective_message.reply_text(
+        "<code>...</code>", parse_mode=ParseMode.HTML
     )
 
+    reply = f"<b><u>Author of the Creation</u></b>\n[𝘚𝘩𝘪𝘷𝘢𝘯𝘨](https://t.me/{OWNER_ID})\n"
+
+    true_dev = list(set(DEV_USERS) - {OWNER_ID})
+    reply += "<b>Authority of the Dimensions:</b>\n"
+    for each_user in true_dev:
+        user_id = int(each_user)
+        try:
+            user = bot.get_chat(user_id)
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
+        except TelegramError:
+            pass
+    m.edit_text(reply, parse_mode=ParseMode.HTML)
+    
+    true_sudo = list(set(DRAGONS) - set(DEV_USERS))
+    reply += "<b>Authority of the Dragons :</b>\n"
+    for each_user in true_sudo:
+        user_id = int(each_user)
+        try:
+            user = bot.get_chat(user_id)
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
+        except TelegramError:
+            pass
+    m.edit_text(reply, parse_mode=ParseMode.HTML)
+
+    reply += "<b>Authority of the Demons :</b>\n"
+    for each_user in DEMONS:
+        user_id = int(each_user)
+        try:
+            user = bot.get_chat(user_id)
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
+        except TelegramError:
+            pass
+    m.edit_text(reply, parse_mode=ParseMode.HTML)
+
+    text += "<b>Authority of the Tigers :</b>\n"
+    for each_user in TIGERS:
+        user_id = int(each_user)
+        try:
+            user = bot.get_chat(user_id)
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
+        except TelegramError:
+            pass
+    m.edit_text(reply, parse_mode=ParseMode.HTML)
+
+    text += "<b>Authority of the Wolves :</b>\n"
+    for each_user in WOLVES:
+        user_id = int(each_user)
+        try:
+            user = bot.get_chat(user_id)
+            reply += f"• {mention_html(user_id, html.escape(user.first_name))}\n"
+        except TelegramError:
+            pass
+    m.edit_text(reply, parse_mode=ParseMode.HTML)
+
+    
       
 __help__ = f"""
 *⚠️ Notice:*
