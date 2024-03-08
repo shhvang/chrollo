@@ -525,7 +525,7 @@ def devlist(update: Update, context: CallbackContext):
             pass
     m.edit_text(reply, parse_mode=ParseMode.HTML)
 
-@sudo_plus
+@whitlelist_plus
 async def authorities(update: Update, context: CallbackContext):
     try:
         owner = await get_chat_member(context, OWNER_ID)
@@ -552,13 +552,7 @@ async def authorities(update: Update, context: CallbackContext):
         or "No Heirs of the Authority of the Wolves"
     )
 
-    await update.message.reply_text(reply, parse_mode=ParseMode.HTML)
-    LOGGER.info(
-        f"{update.message.from_user.id} fetched botstaff in {update.message.chat.id}"
-    )
-
-
-
+      
 __help__ = f"""
 *⚠️ Notice:*
 Commands listed here only work for users with special access are mainly used for troubleshooting, debugging purposes.
