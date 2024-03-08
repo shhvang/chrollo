@@ -103,7 +103,7 @@ url="https://t.me/iopacity"),
 
 HELP_STRINGS = f"""
 Choose the help module.
-Ask your doubts at Support Chat
+Ask your doubts at [Support Chat](https://t.me/{SUPPORT_CHAT}
 
 All commands can be used with : /"""
 
@@ -186,7 +186,7 @@ def start(update: Update, context: CallbackContext):
                 )
 
             elif args[0].lower() == "markdownhelp":
-                IMPORTED["exᴛʀᴀs"].markdown_help_sender(update)
+                IMPORTED["Extras"].markdown_help_sender(update)
             elif args[0].lower().startswith("stngs_"):
                 match = re.match("stngs_(.*)", args[0].lower())
                 chat = dispatcher.bot.getChat(match.group(1))
