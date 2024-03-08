@@ -15,48 +15,6 @@ from telegram.error import TelegramError
 
 from Chrollo import NO_LOAD
 
-
-PM_START_TEXT = """
-Hi {}, I am {}!
-powered by @iOpacity 
-
-A strong Group Management bot running on a high-speed server.
-Recruit me for smooth operations in your GCs 
-
-Check commands to get information about my modules ⚡
-"""
-
-buttons = [
-    [
-        InlineKeyboardButton(
-            text="Recruit Me",
-            url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
-        ),
-    
-        InlineKeyboardButton(text="Commands", callback_data="help_back"),
-    ],
-    [
-        InlineKeyboardButton(text="Support", url=f"https://t.me/{SUPPORT_CHAT}"),
-
-        InlineKeyboardButton(text="Developer", url=f"tg://user?id={OWNER_ID}"),
-    ],
-    [
-        InlineKeyboardButton(text="Opacity",
-url="https://t.me/iopacity"),
-    ],
-]
-
-Chrollo_back = (
-    first_name = update.effective_user.first_name
-    text(PM_START_TEXT.format(escape_markdown(first_name), BOT_NAME),
-            reply_markup=InlineKeyboardMarkup(buttons),
-            parse_mode=ParseMode.MARKDOWN,
-            timeout=60,
-            disable_web_page_preview=True,
-        )
-      )
-
-
 class EqInlineKeyboardButton(InlineKeyboardButton):
     def __eq__(self, other):
         return self.text == other.text
