@@ -552,6 +552,7 @@ def devlist(update: Update, context: CallbackContext):
 @whitelist_plus
 def authorities(update: Update, context: CallbackContext):
     bot = context.bot
+    message = update.effective_message
     try:
         reply = f"<u><b>Authorities</b><u>\n\n<b>Author of the Creation 🌱</b>\n刻 [𝘚𝘩𝘪𝘷𝘢𝘯𝘨](https://t.me/shhvang)\n ⼀ Owner\n\n"
     except TelegramError:
@@ -604,7 +605,7 @@ def authorities(update: Update, context: CallbackContext):
         except TelegramError:
             pass
             
-    Return update.effective_message.reply_text(reply, parse_mode=ParseMode.HTML)
+    Return message.reply_text(reply, parse_mode=ParseMode.HTML)
 
           
 __help__ = f"""
