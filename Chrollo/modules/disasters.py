@@ -604,7 +604,7 @@ def authorities(update: Update, context: CallbackContext):
         except TelegramError:
             pass
             
-    update.effective_message.reply_text(reply, parse_mode=ParseMode.HTML)
+    Return update.effective_message.reply_text(reply, parse_mode=ParseMode.HTML)
 
           
 __help__ = f"""
