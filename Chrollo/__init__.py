@@ -1,4 +1,4 @@
-import logging
+7import logging
 import os
 import sys
 import time
@@ -6,6 +6,7 @@ import time
 import telegram.ext as tg
 from pyrogram import Client, errors
 from telethon import TelegramClient
+from telethon.session import MemorySession
 
 StartTime = time.time()
 
@@ -150,7 +151,7 @@ DEMONS.add(6034028784)
 TIGERS.add(1264657553) 
 
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
-telethn = TelegramClient("chrollo", API_ID, API_HASH)
+telethn = TelegramClient(MemorySession(), API_ID, API_HASH)
 
 pbot = Client("Chrollo", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 dispatcher = updater.dispatcher
