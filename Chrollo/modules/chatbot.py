@@ -128,13 +128,17 @@ def chatbot(update: Update, context: CallbackContext):
     if message.text and not message.document:
         if not chrollo_message(context, message):
             return
+        Message = message.text
         bot.send_chat_action(chat_id, action="typing")
-        request = requests.get(
-            f"https://kora-api.vercel.app/chatbot/2d94e37d-937f-4d28-9196-bd5552cac68b/{BOT_NAME}/Anonymous/message={message.text}"
+        kukiurl = requests.get(
+            f"http://api.brainshop.ai/get?bid=176809&key=lbMN8CXTGzhn1NKG&uid=[user]&msg={Message}"
         )
-        results = json.loads(request.text)
-        sleep(0.5)
-        message.reply_text(results["reply"])
+
+        Kuki = json.loads(kukiurl.text)
+        kuki = Kuki["cnt"]
+
+        sleep(0.3)
+        message.reply_text(kuki)
 
 
 __help__ = """
