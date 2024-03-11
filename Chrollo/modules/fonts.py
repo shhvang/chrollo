@@ -192,4 +192,4 @@ __help__ = """
  ❍ /font <text> *:* change the font the given text.
  """
 
-__mod_name__ = "Font Editor"
+__mod_name__ = "Fonts"
