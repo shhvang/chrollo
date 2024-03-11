@@ -43,11 +43,11 @@ async def _(event):
             title = gresults["titles"][i]
             link = gresults["links"][i]
             desc = gresults["descriptions"][i]
-            msg += f"❍[{title}]({link})\n**{desc}**\n\n"
+            msg += f"› [{title}]({link})\n{desc}\n\n"
         except IndexError:
             break
     await webevent.edit(
-        "**Search Query:**\n`" + match + "`\n\n**Results:**\n" + msg, link_preview=False
+        "**Query :**`" + match + "`\n\n**Search Results:**\n" + msg, link_preview=False
     )
 
 
@@ -92,7 +92,7 @@ async def okgoogle(img):
         photo = io.BytesIO()
         await tbot.download_media(message, photo)
     else:
-        await img.reply("`Reply to photo or sticker fu*ker`")
+        await img.reply("`Reply to photo or sticker`")
         return
 
     if photo:
