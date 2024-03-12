@@ -1,7 +1,7 @@
 import threading
 
 from sqlalchemy import (
-    BigInteger,
+    Integer,
     Column,
     ForeignKey,
     String,
