@@ -41,7 +41,7 @@ async def _(event):
     if event.is_group:
         if not (await is_register_admin(event.input_chat, event.message.sender_id)):
             await event.reply(
-                "Hey, you are not admin. You can't use this command, But you can use in my PM 🙂"
+                "Hey, you are not admin. You can't use this command, But you can use in my PM"
             )
             return
 
@@ -121,7 +121,7 @@ async def _(event):
     if event.is_group:
         if not (await is_register_admin(event.input_chat, event.message.sender_id)):
             await event.reply(
-                "Hey, You are not admin. You can't use this command, But you can use in my PM 🙂"
+                "Hey, You are not admin. You can't use this command, But you can use in my PM"
             )
             return
 
@@ -212,4 +212,4 @@ Hey I can convert files here.
  ❍ /unzip*:* reply to a telegram file to decompress it from the .zip format
 """
 
-__mod_name__ = "Zip File"
+__mod_name__ = "Zip"
