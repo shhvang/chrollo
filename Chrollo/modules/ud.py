@@ -25,7 +25,7 @@ def define(update: Update, context: CallbackContext):
         f"https://api.dictionaryapi.dev/api/v2/entries/en/{text}"
     ).json()
     try:
-        reply_text = f'*{text}*\n\n{results["list"][0]["definition"]}\n\n_{results["list"][0]["example"]}_'
+        reply_text = f'*{text}*\n\n{results["definition"]}\n\n_{results["list"][0]["antonyms"]}_'
     except:
         reply_text = "No results found."
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
