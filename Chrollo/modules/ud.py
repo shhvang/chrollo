@@ -44,4 +44,4 @@ __help__ = """
 __mod_name__ = "Define"
 
 __command_list__ = ["ud"], ["define"]
-__handlers__ = [UD_HANDLER], ["DEFINE_HANDLER"]
+__handlers__ = [UD_HANDLER], [DEFINE_HANDLER]
