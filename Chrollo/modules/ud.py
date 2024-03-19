@@ -32,7 +32,7 @@ def define(update: Update, context: CallbackContext):
 
 
 UD_HANDLER = DisableAbleCommandHandler(["ud"], ud, run_async=True)
-DEFINE_HANDLER = DisableAbleCommandHandler(["define"], define, run async=True)
+DEFINE_HANDLER = DisableAbleCommandHandler(["define"], define, run_async=True)
 
 dispatcher.add_handler(DEFINE_HANDLER)
 dispatcher.add_handler(UD_HANDLER)
