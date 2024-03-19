@@ -18,15 +18,30 @@ def ud(update: Update, context: CallbackContext):
         reply_text = "No results found."
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
+def define(update: Update, context: CallbackContext):
+    message = update.effective_message
+    text = message.text[len("/define ") :]
+    results = requests.get(
+        f"https://api.dictionaryapi.dev/api/v2/entries/en/{text}"
+    ).json()
+    try:
+        reply_text = f'*{text}*\n\n{results["list"][0]["definition"]}\n\n_{results["list"][0]["example"]}_'
+    except:
+        reply_text = "No results found."
+    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
+
 
 UD_HANDLER = DisableAbleCommandHandler(["ud"], ud, run_async=True)
+DEFINE_HANDLER = DisableAbleCommandHandler(["define"], define, run async=True)
 
+dispatcher.add_handler(DEFINE_HANDLER)
 dispatcher.add_handler(UD_HANDLER)
 
 __help__ = """
-» /ud (text) *:* Searchs the given text on Urban Dictionary and sends you the information.
+» /ud (text) *:* Gives off a randomly written shitty definition
+» /define (text) *:* The actual dictionary 
 """
-__mod_name__ = "UD"
+__mod_name__ = "Define"
 
-__command_list__ = ["ud"]
-__handlers__ = [UD_HANDLER]
+__command_list__ = ["ud"], ["define"]
+__handlers__ = [UD_HANDLER], ["DEFINE_HANDLER"]
