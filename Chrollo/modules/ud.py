@@ -24,14 +24,22 @@ def ud(update: Update, context: CallbackContext):
 
 def define(update: Update, context: CallbackContext):
     message = update.effective_message
-    text = message.text[len("/define ") :]
-    results = requests.get(
-        f"https://api.dictionaryapi.dev/api/v2/entries/en/{text}"
-    ).json()
+    text = message.text[len("/define "):]
+    results = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{text}").json()
+    
     try:
-        reply_text = f'*{text}*\n\n{results["definition"]}_'
-    except:
-        reply_text = "No results found."
+        if results:
+            if "definitions" in results[0] and results[0]["definitions"]:
+                definition = results[0]["definitions"][0]["definition"]
+                reply_text = f'*{text}*\n\n{definition}'
+            else:
+                reply_text = "No definitions found for that term."
+        else:
+            reply_text = "No results found."
+    except Exception as e:
+        print(e)  # Print the exception for debugging purposes
+        reply_text = "An error occurred while fetching the definition."
+    
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
 
