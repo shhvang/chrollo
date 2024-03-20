@@ -8,14 +8,18 @@ from Chrollo.modules.disable import DisableAbleCommandHandler
 
 def ud(update: Update, context: CallbackContext):
     message = update.effective_message
-    text = message.text[len("/ud ") :]
-    results = requests.get(
-        f"https://api.urbandictionary.com/v0/define?term={text}"
-    ).json()
+    text = message.text[len("/ud "):]
+    results = requests.get(f"https://api.urbandictionary.com/v0/define?term={text}").json()
+    
     try:
-        reply_text = f'*{text}*\n\n{results["list"][0]["definition"]}\n\n_{results["list"][0]["example"]}_'
-    except:
-        reply_text = "No results found."
+        if results["list"]:
+            reply_text = f'*{text}*\n\n{results["list"][0]["definition"]}\n\n_{results["list"][0]["example"]}_'
+        else:
+            reply_text = "No definitions found for that term."
+    except Exception as e:
+          # Print the exception for debugging purposes
+        reply_text = f"An error occurred while fetching the definition. {e}"
+    
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
 def define(update: Update, context: CallbackContext):
