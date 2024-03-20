@@ -37,9 +37,8 @@ def define(update: Update, context: CallbackContext):
                 reply_text = "No definitions found for that term."
         else:
             reply_text = "No results found."
-    except Exception as e:
-        print(e)  # Print the exception for debugging purposes
-        reply_text = "An error occurred while fetching the definition."
+    except Exception as e: # Print the exception for debugging purposes
+        reply_text = f"An error occurred while fetching the definition: `{e}`"
     
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
