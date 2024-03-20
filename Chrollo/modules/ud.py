@@ -20,7 +20,7 @@ def ud(update: Update, context: CallbackContext):
           # Print the exception for debugging purposes
         reply_text = f"An error occurred while fetching the definition. {e}"
     
-    message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
+    message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
 
 def define(update: Update, context: CallbackContext):
     args = context.args
