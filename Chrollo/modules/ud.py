@@ -23,6 +23,7 @@ def ud(update: Update, context: CallbackContext):
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
 def define(update: Update, context: CallbackContext):
+    args = context.args
     message = update.effective_message
     text = message.text[len("/define "):]
     results = requests.get(f"https://api.dictionaryapi.dev/api/v2/entries/en/{text}").json()
