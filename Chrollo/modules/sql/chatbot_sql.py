@@ -25,7 +25,7 @@ def is_chrollo(chat_id):
         SESSION.close()
 
 
-def set_fallen(chat_id):
+def set_chrollo(chat_id):
     with INSERTION_LOCK:
         chrollochat = SESSION.query(ChrolloChats).get(str(chat_id))
         if not chrollochat:
