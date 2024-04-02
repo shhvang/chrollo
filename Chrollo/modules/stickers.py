@@ -5,11 +5,10 @@ from io import BytesIO
 from urllib.error import HTTPError
 
 from PIL import Image
-from telegram import (InlineKeyboardButton, InlineKeyboardMarkup,
+from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ParseMode,
                       TelegramError, Update)
 from telegram.ext import CallbackContext
 from telegram.utils.helpers import mention_html
-from telegram.constants import ParseMode
 
 from Chrollo import dispatcher
 from Chrollo.modules.disable import DisableAbleCommandHandler
