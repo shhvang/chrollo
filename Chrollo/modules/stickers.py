@@ -89,7 +89,7 @@ def kang(update: Update, context: CallbackContext):
     while packname_found == 0:
         try:
             is_video = False
-            stickerset = context.bot.get_sticker_set(name=packname, is_animated=True, is_video=is_video)
+            stickerset = context.bot.get_sticker_set(name=packname, is_video=is_video)
             if len(stickerset.stickers) >= max_stickers:
                 packnum += 1
                 packname = (
