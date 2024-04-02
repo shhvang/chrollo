@@ -1,4 +1,5 @@
 import importlib
+import json
 import re
 import time
 from platform import python_version as y
@@ -44,7 +45,12 @@ from Chrollo import (
 from Chrollo.modules import ALL_MODULES
 from Chrollo.modules.helper_funcs.chat_status import is_user_admin
 from Chrollo.modules.helper_funcs.misc import paginate_modules
-
+import traceback
+import html
+from typing import Optional
+from telegram import Chat
+from telegram import Message
+from telegram import User
 
 def get_readable_time(seconds: int) -> str:
     count = 0

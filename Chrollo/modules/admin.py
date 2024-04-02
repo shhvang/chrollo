@@ -648,7 +648,7 @@ def unpin(update: Update, context: CallbackContext):
         not (unpinner.can_pin_messages or unpinner.status == "creator")
         and user.id not in DRAGONS
     ):
-        message.reply_text(
+        msg.reply_text(
             "» You lack the permission to pin/unpin messages."
         )
         return
@@ -768,9 +768,8 @@ def invite(update: Update, context: CallbackContext):
 
 @connection_status
 def adminlist(update, context):
-    chat = update.effective_chat  # type: Optional[Chat] -> unused variable
-    user = update.effective_user  # type: Optional[User]
-    args = context.args  # -> unused variable
+    chat = update.effective_chat
+    user = update.effective_user
     bot = context.bot
 
     if update.effective_message.chat.type == "private":
@@ -780,9 +779,7 @@ def adminlist(update, context):
         )
         return
 
-    update.effective_chat
     chat_id = update.effective_chat.id
-    chat_name = update.effective_message.chat.title  # -> unused variable
 
     try:
         msg = update.effective_message.reply_text(
