@@ -98,15 +98,8 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
                 stickerset = context.bot.do_api_request("get_sticker_set", {"name": packname})
                 if len(stickerset.stickers) >= max_stickers:
                     packnum += 1
-                    if is_animated:
-                        packname = f"animated{packnum}_{user.id}_by_{context.bot.username}"
-                        ppref = "animated"
-                    elif is_video:
-                        packname = f"vid{packnum}_{user.id}_by_{context.bot.username}"
-                        ppref = "vid"
-                    else:
-                        packname = f"a{packnum}_{user.id}_by_{context.bot.username}"
-                        ppref = ""
+                    packname = f"a{packnum}_{user.id}_by_{context.bot.username}"
+                    ppref = ""
                 else:
                     last_set = True
                 packs += f"[{ppref}pack{packnum if packnum != 0 else ''}](t.me/addstickers/{packname})\n"
@@ -116,21 +109,6 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
                 else:
                     print(e)
                     break  # something went wrong, leave the loop and send what we have.
-
-            # If we're done checking bot animated and non-animated packs
-            # exit the loop and send our pack message.
-            if last_set and is_animated:
-                break
-            elif last_set:
-                # move to checking animated packs. Start with the first pack
-                packname = f"animated_{user.id}_by_{context.bot.username}"
-                # reset our counter
-                packnum = 0
-                # Animated packs have a max of 50 stickers
-                max_stickers = 50
-                # tell the loop we're looking at animated stickers now
-                is_animated = True
-
         # if they have no packs, change our message
         if not packs:
             packs = "Looks like you don't have any packs! Please reply to a sticker, or image to kang it and create a new pack!"
@@ -227,7 +205,7 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
     # Find if the pack is full already
     while not packname_found:
         try:
-            stickerset = context.bot.get_sticker_set(packname)
+            stickerset = context.bot.do_api_request("get_sticker_set", {"name": packname})
             if len(stickerset.stickers) >= max_stickers:
                 packnum += 1
                 if is_animated:
