@@ -95,7 +95,7 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
         while True:
             last_set = False
             try:
-                stickerset = context.bot.get_sticker_set(packname)
+                stickerset = context.bot.do_api_request("get_sticker_set", {"name": packname})
                 if len(stickerset.stickers) >= max_stickers:
                     packnum += 1
                     if is_animated:
