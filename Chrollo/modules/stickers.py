@@ -427,9 +427,9 @@ __help__ = """
 """
 
         # Define the handlers
-STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid, block=False)
-GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker, block=False)
-KANG_HANDLER = DisableAbleCommandHandler("kang", kang, block=False)
+STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)
+GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker)
+KANG_HANDLER = DisableAbleCommandHandler("kang", kang)
 
 # Add the handlers to the application
 dispatcher.add_handler(STICKERID_HANDLER)
