@@ -210,7 +210,7 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
             sticker_data.seek(0)
         except ValueError:
             # If they gave an invalid URL
-            await msg.reply_text("Yea, that's not a URL I can download from.")
+            msg.reply_text("Yea, that's not a URL I can download from.")
             return
         except HTTPError as e:
             # if we're not allowed there for some reason
