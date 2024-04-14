@@ -5,19 +5,20 @@ from io import BytesIO
 from urllib.error import HTTPError
 
 from PIL import Image
-from telegram import (InlineKeyboardButton, InlineKeyboardMarkup, ParseMode,
+from telegram import (Bot, InlineKeyboardButton, InlineKeyboardMarkup, ParseMode,
                       TelegramError, Update)
 from telegram.ext import CallbackContext
 from telegram.utils.helpers import mention_html
 
 from Chrollo import dispatcher
-from Chrollo.modules.disable import DisableAbleCommandHandler
+from Chrollo.plugins.disable import DisableAbleCommandHandler
+import asyncio
 
 
-def stickerid(update: Update, context: CallbackContext):
+async def stickerid(update: Update, context: CallbackContext):
     msg = update.effective_message
     if msg.reply_to_message and msg.reply_to_message.sticker:
-        update.effective_message.reply_text(
+        await update.effective_message.reply_text(
             "Hello "
             + f"{mention_html(msg.from_user.id, msg.from_user.first_name)}"
             + ", The sticker id you are replying is :\n <code>"
@@ -26,45 +27,50 @@ def stickerid(update: Update, context: CallbackContext):
             parse_mode=ParseMode.HTML,
         )
     else:
-        update.effective_message.reply_text(
+        await update.effective_message.reply_text(
             "Hello "
             + f"{mention_html(msg.from_user.id, msg.from_user.first_name)}"
             + ", Please reply to sticker message to get id sticker",
             parse_mode=ParseMode.HTML,
         )
 
-def getsticker(update: Update, context: CallbackContext):
+async def getsticker(update: Update, context: CallbackContext):
     bot = context.bot
     msg = update.effective_message
     chat_id = update.effective_chat.id
+    
     if msg.reply_to_message and msg.reply_to_message.sticker:
         file_id = msg.reply_to_message.sticker.file_id
         # Check if it's an animated file
         is_animated = msg.reply_to_message.sticker.is_animated
         # Get the file and put it into a memory buffer
-        new_file = bot.get_file(file_id)
-        sticker_data = new_file.download(out=BytesIO())
+        new_file = await bot.get_file(file_id)
+        sticker_data = await new_file.download(out=BytesIO())
         # go back to the start of the buffer
         sticker_data.seek(0)
-        # Reply with the document. Telegram INSISTS on making anything
-        # that ends in .tgs become an animated sticker so we'll have to
-        # rename it to something the user should know how to handle.
-        filename = "sticker.png"
-        if is_animated:
-            filename = "animated_sticker.tgs.rename_me"
+        filename = "animated_sticker.tgs.rename_me" if is_animated else "sticker.png"
         # Send the document
-        bot.send_document(chat_id,
+        await bot.send_document(chat_id,
             document=sticker_data,
             filename=filename,
             disable_content_type_detection=True
         )
     else:
-        update.effective_message.reply_text(
+        await update.effective_message.reply_text(
             "Please reply to a sticker for me to upload its PNG."
         )
 
+async def get_sticker_count(bot: Bot, packname: str) -> int:
+    resp = await bot._request.post(
+        f"{bot.base_url}/getStickerSet",
+        {
+            "name": packname,
+        },
+    )
+    return len(resp["stickers"])
 
-def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
+# I was lazy to modify the code so I just copied it from the some other repository
+async def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
     global ppref
     msg = update.effective_message
     user = update.effective_user
@@ -95,20 +101,43 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
         while True:
             last_set = False
             try:
-                stickerset = context.bot.do_api_request("get_sticker_set", {"name": packname})
-                if len(stickerset.stickers) >= max_stickers:
-                    packnum += 1
-                    packname = f"a{packnum}_{user.id}_by_{context.bot.username}"
-                    ppref = ""
+                if await get_sticker_count(context.bot, packname) >= max_stickers:
+                    # Your code herepacknum += 1
+                    if is_animated:
+                        packname = f"animated{packnum}_{user.id}_by_{context.bot.username}"
+                        ppref = "animated"
+                    elif is_video:
+                        packname = f"vid{packnum}_{user.id}_by_{context.bot.username}"
+                        ppref = "vid"
+                    else:
+                        packname = f"a{packnum}_{user.id}_by_{context.bot.username}"
+                        ppref = ""
                 else:
                     last_set = True
                 packs += f"[{ppref}pack{packnum if packnum != 0 else ''}](t.me/addstickers/{packname})\n"
             except TelegramError as e:
-                if e.message == "Stickerset_invalid":
+                # Your code hereif e.message == "Stickerset_invalid":
                     last_set = True
-                else:
-                    print(e)
-                    break  # something went wrong, leave the loop and send what we have.
+            else:
+                print(e)
+                break  # something went wrong, leave the loop and send what we have.
+
+            # If we're done checking bot animated and non-animated packs
+            # exit the loop and send our pack message.
+            if last_set and is_animated:
+                # Your code here
+                break
+            elif last_set:
+                # move to checking animated packs. Start with the first pack
+                packname = f"animated_{user.id}_by_{context.bot.username}"
+                # reset our counter
+                packnum = 0
+                # Animated packs have a max of 50 stickers
+                max_stickers = 50
+                # tell the loop we're looking at animated stickers now
+                is_animated = True
+                # Your code here
+
         # if they have no packs, change our message
         if not packs:
             packs = "Looks like you don't have any packs! Please reply to a sticker, or image to kang it and create a new pack!"
@@ -116,7 +145,7 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
             packs = "Please reply to a sticker, or image to kang it!\nOh, by the way, here are your packs:\n" + packs
 
         # Send our list as a reply
-        msg.reply_text(packs, parse_mode=ParseMode.MARKDOWN)
+        await msg.reply_text(packs, parse_mode=ParseMode.MARKDOWN)
         # Don't continue processing the command.
         return
 
@@ -129,6 +158,7 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
             # also grab the emoji if the user wishes
             if not args:
                 sticker_emoji = rep.sticker.emoji
+                
         elif rep.photo:
             file_id = rep.photo[-1].file_id
         elif rep.video:
@@ -139,10 +169,11 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
             is_video = True
         elif doc := rep.document:
             file_id = rep.document.file_id
-            if doc.mime_type == 'video/webm':
-                is_video = True
+            if doc.mime_type == 'video/webm':is_video = True
+                # Your code here
+                
         else:
-            msg.reply_text("Yea, I can't steal that.")
+            await msg.reply_text("Yea, I can't steal that.")
             return
 
         # Check if they have an emoji specified.
@@ -150,8 +181,8 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
             sticker_emoji = args[0]
 
         # Download the data
-        kang_file = context.bot.get_file(file_id)
-        sticker_data = kang_file.download(out=BytesIO())
+        kang_file = await context.bot.get_file(file_id)
+        sticker_data = await kang_file.download(out=BytesIO())
         # move to the front of the buffer.
         sticker_data.seek(0)
     else:  # user sent /kang with url
@@ -163,28 +194,27 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
         # a buffer object we can use elsewhere.
         sticker_data = BytesIO()
         try:
-            resp = urllib.urlopen(url)
+            resp = await urllib.urlopen(url)
 
             # check the mime-type first, you can't kang a .html file.
             mime = resp.getheader('Content-Type')
             if mime not in ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'application/x-tgsticker']:
-                msg.reply_text("I can only kang images.")
+                msg.reply_text("I can only kang images m8.")
                 return
-
-            # check if it's an animated sticker type
+            # check if it's an animated sticker typeis_animated = True
             if mime == "application/x-tgsticker":
                 is_animated = True
             # write our sticker data to a buffer object
-            sticker_data.write(resp.read())
+            sticker_data.write(await resp.read())
             # move to the front of the buffer.
             sticker_data.seek(0)
         except ValueError:
             # If they gave an invalid URL
-            msg.reply_text("Yea, that's not a URL I can download from.")
+            await msg.reply_text("Yea, that's not a URL I can download from.")
             return
         except HTTPError as e:
             # if we're not allowed there for some reason
-            msg.reply_text(f"Error downloading the file: {e.code} {e.msg}")
+            await msg.reply_text(f"Error downloading the file: {e.code} {e.msg}")
             return
 
     packnum = 0
@@ -205,8 +235,7 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
     # Find if the pack is full already
     while not packname_found:
         try:
-            stickerset = context.bot.do_api_request("get_sticker_set", {"name": packname})
-            if len(stickerset.stickers) >= max_stickers:
+            if await get_sticker_count(context.bot, packname) >= max_stickers:
                 packnum += 1
                 if is_animated:
                     packname = f"animated{packnum}_{user.id}_by_{context.bot.username}"
@@ -221,6 +250,8 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
                 packname_found = True
                 # we will need to create the sticker pack
                 invalid = True
+            else:
+                raise
 
     # if the image isn't animated, ensure it's the right size/format with PIL
     if not is_animated and not is_video:
@@ -261,7 +292,7 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
             # Since Stickerset_invalid will also try to create a pack we might as
             # well just reuse that code and avoid typing it all again.
             raise TelegramError("Stickerset_invalid")
-        context.bot.add_sticker_to_set(
+        await context.bot.add_sticker_to_set(
             user_id=user.id,
             name=packname,
                 tgs_sticker = sticker_data if is_animated else None,
@@ -269,7 +300,7 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
                 png_sticker = sticker_data if not is_animated and not is_video else None,
             emojis=sticker_emoji,
         )
-        msg.reply_text(
+        await msg.reply_text(
             f"Sticker successfully added to [pack](t.me/addstickers/{packname})"
             + f"\nEmoji is: {sticker_emoji}",
             parse_mode=ParseMode.MARKDOWN,
@@ -278,7 +309,7 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
         if e.message == "Stickerset_invalid":
             # if we need to make a sticker pack, make one and make this the
             # first sticker in the pack.
-            makepack_internal(
+            await makepack_internal(
                 update,
                 context,
                 msg,
@@ -291,26 +322,26 @@ def kang(update: Update, context: CallbackContext):  # sourcery no-metrics
                 png_sticker=sticker_data if not is_animated and not is_video else None,
             )
         elif e.message == "Stickers_too_much":
-            msg.reply_text("Max packsize reached. Press F to pay respecc.")
+            await msg.reply_text("Max packsize reached.")
         elif e.message == "Invalid sticker emojis":
-            msg.reply_text("I can't kang with that emoji!")
+            await msg.reply_text("I can't kang with that emoji!")
         elif e.message == "Sticker_video_nowebm":
-            msg.reply_text(
+            await msg.reply_text(
                 "This media format isn't supported, I need it in a webm format, "
                 "[see this guide](https://core.telegram.org/stickers/webm-vp9-encoding).",
                 parse_mode=ParseMode.MARKDOWN,
                 disable_web_page_preview = True,
             )
         elif e.message == "Internal Server Error: sticker set not found (500)":
-            msg.reply_text(
+            await msg.reply_text(
                 f"Sticker successfully added to [pack](t.me/addstickers/{packname})\n"
                 + f"Emoji is: {sticker_emoji}", parse_mode=ParseMode.MARKDOWN
             )
         else:
-            msg.reply_text(f"Oops! looks like something happened that shouldn't happen! ({e.message})")
+            await msg.reply_text(f"Oops! looks like something happened that shouldn't happen! ({e.message})")
             raise
 
-def makepack_internal(
+async def makepack_internal(
     update,
     context,
     msg,
@@ -327,7 +358,7 @@ def makepack_internal(
         extra_version = ""
         if packnum > 0:
             extra_version = f" {packnum}"
-        success = context.bot.create_new_sticker_set(
+        success = await context.bot.create_new_sticker_set(
             user.id,
             packname,
             f"{name}s {'animated ' if tgs_sticker else 'video ' if webm_sticker else ''}kang pack{extra_version}",
@@ -340,7 +371,7 @@ def makepack_internal(
     except TelegramError as e:
         print(e)
         if e.message == 'Sticker set name is already occupied':
-            msg.reply_text(
+            await msg.reply_text(
                 'Your pack can be found [here](t.me/addstickers/%s)'
                 % packname,
                 parse_mode=ParseMode.MARKDOWN,
@@ -348,8 +379,8 @@ def makepack_internal(
 
             return
         elif e.message in ('Peer_id_invalid', 'bot was blocked by the user'):
-            msg.reply_text(
-                'Contact me in PM first.',
+            await msg.reply_text(
+                'Start me in PM first',
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
@@ -369,7 +400,7 @@ def makepack_internal(
         ):
             success = True
         elif e.message == 'Sticker_video_nowebm':
-            msg.reply_text(
+            await msg.reply_text(
                 "This media format isn't supported, I need it in a webm format, "
                 "[see this guide](https://core.telegram.org/stickers/webm-vp9-encoding).",
                 parse_mode=ParseMode.MARKDOWN,
@@ -379,12 +410,12 @@ def makepack_internal(
         else:
             success = False
     if success:
-        msg.reply_text(
+        await msg.reply_text(
             f"Sticker pack successfully created. Get it [here](t.me/addstickers/{packname})",
             parse_mode=ParseMode.MARKDOWN,
         )
     else:
-        msg.reply_text("Failed to create sticker pack. Possibly due to blek mejik.")
+        await msg.reply_text("Failed to create sticker pack. Possibly due to blek mejik.")
 
 __mod_name__ = "Sticker"
 
@@ -396,11 +427,11 @@ __help__ = """
 """
 
         # Define the handlers
-STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid)
-GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker)
-KANG_HANDLER = DisableAbleCommandHandler("kang", kang)
+STICKERID_HANDLER = DisableAbleCommandHandler("stickerid", stickerid, block=False)
+GETSTICKER_HANDLER = DisableAbleCommandHandler("getsticker", getsticker, block=False)
+KANG_HANDLER = DisableAbleCommandHandler("kang", kang, block=False)
 
-# Add the handlers to the dispatcher
+# Add the handlers to the application
 dispatcher.add_handler(STICKERID_HANDLER)
 dispatcher.add_handler(GETSTICKER_HANDLER)
-dispatcher.add_handler(KANG_HANDLER)
+dispathcer.add_handler(KANG_HANDLER)
