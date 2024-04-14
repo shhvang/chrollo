@@ -11,7 +11,7 @@ from telegram.ext import CallbackContext
 from telegram.utils.helpers import mention_html
 
 from Chrollo import dispatcher
-from Chrollo.plugins.disable import DisableAbleCommandHandler
+from Chrollo.modules.disable import DisableAbleCommandHandler
 import asyncio
 
 
