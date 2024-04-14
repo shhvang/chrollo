@@ -334,6 +334,25 @@ def unban(update: Update, context: CallbackContext) -> str:
     bot, args = context.bot, context.args
     user_id, reason = extract_user_and_text(message, args)
 
+    if message.reply_to_message and message.reply_to_message.sender_chat:
+        r = bot.unban_chat_sender_chat(chat_id=chat.id, sender_chat_id=message.reply_to_message.sender_chat.id)
+        if r:
+            message.reply_text("Channel {} was unbanned successfully from {}".format(
+                html.escape(message.reply_to_message.sender_chat.title),
+                html.escape(chat.title)
+            ),
+                parse_mode="html"
+            )
+            return (
+                f"<b>{html.escape(chat.title)}:</b>\n"
+                f"#UNBANNED\n"
+                f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
+                f"<b>Channel:</b> {html.escape(message.reply_to_message.sender_chat.title)} ({message.reply_to_message.sender_chat.id})"
+            )
+        else:
+            message.reply_text("Failed to unban channel")
+        return
+
     if not user_id:
         message.reply_text("I doubt that's a user.")
         return log_message
