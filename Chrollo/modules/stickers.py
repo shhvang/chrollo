@@ -434,4 +434,4 @@ KANG_HANDLER = DisableAbleCommandHandler("kang", kang)
 # Add the handlers to the application
 dispatcher.add_handler(STICKERID_HANDLER)
 dispatcher.add_handler(GETSTICKER_HANDLER)
-dispathcer.add_handler(KANG_HANDLER)
+dispatcher.add_handler(KANG_HANDLER)
