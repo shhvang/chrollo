@@ -1,31 +1,21 @@
-from pyrogram import __version__ as pyrover
 from pyrogram import filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
-from telegram import __version__ as telever
-from telethon import __version__ as tlhver
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 
-from Chrollo import BOT_NAME, BOT_USERNAME, OWNER_ID, START_IMG, SUPPORT_CHAT, pbot
+from Chrollo import ALIVE_IMG, ALIVE_MSG, BOT_USERNAME, SUPPORT_CHAT, app
 
+alive_button = [
+    [
+        InlineKeyboardButton("Help", url=f"https://t.me/{BOT_USERNAME}?start=help"),
+        InlineKeyboardButton("Support", url=f"https://t.me/{SUPPORT_CHAT}"),
+    ],
+]
 
-@pbot.on_message(filters.command("alive"))
-async def awake(_, message: Message):
-   
-   
-    BUTTON = [
-        [
-            InlineKeyboardButton("Help", url=f"https://t.me/{BOT_USERNAME}?start=help"),
-            InlineKeyboardButton("Support", url=f"https://t.me/{SUPPORT_CHAT}"),
-        ],
-    ]
-
+@app.on_message(filters.command("alive"))
+async def alive(_, message: Message):
     await message.reply_photo(
-        photo="https://telegra.ph/file/26ef5a0b523c9a52977ad.jpg",
-        caption= """
-I am alive and working perfectly fine ☄️
-Refer to Support if any issue occurs
-""",
-        reply_markup=InlineKeyboardMarkup(BUTTON),
+        ALIVE_IMG,
+        caption=ALIVE_MSG.format(message.from_user.mention),
+        reply_markup=InlineKeyboardMarkup(alive_button),
     )
-
 
 __mod_name__ = "Alive"

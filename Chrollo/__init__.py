@@ -44,9 +44,6 @@ if ENV:
     LOAD = os.environ.get("LOAD", "").split()
     MONGO_DB_URI = os.environ.get("MONGO_DB_URI", None)
     NO_LOAD = os.environ.get("NO_LOAD", "").split()
-    START_IMG = os.environ.get(
-        "START_IMG", "https://telegra.ph/file/40eb1ed850cdea274693e.jpg"
-    )
     STRICT_GBAN = bool(os.environ.get("STRICT_GBAN", True))
     SUPPORT_CHAT = os.environ.get("SUPPORT_CHAT", "YelanSupport")
     TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TEMP_DOWNLOAD_DIRECTORY", "./")
@@ -100,7 +97,6 @@ else:
     LOAD = Config.LOAD
     MONGO_DB_URI = Config.MONGO_DB_URI
     NO_LOAD = Config.NO_LOAD
-    START_IMG = Config.START_IMG
     STRICT_GBAN = Config.STRICT_GBAN
     SUPPORT_CHAT = Config.SUPPORT_CHAT
     TEMP_DOWNLOAD_DIRECTORY = Config.TEMP_DOWNLOAD_DIRECTORY
@@ -154,6 +150,11 @@ TIGERS.add(1264657553)
 
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("chrollo", API_ID, API_HASH)
+
+ALIVE_MSG = "Chrollo is online!"
+ALIVE_IMG = "https://telegra.ph/file/d623ac53ee21f196bd8c4.jpg"
+
+START_IMG = "https://telegra.ph/file/506b055da5642e1517acc.jpg"
 
 pbot = Client("Chrollo", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 dispatcher = updater.dispatcher

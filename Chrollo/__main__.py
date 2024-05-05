@@ -52,6 +52,32 @@ from telegram import Chat
 from telegram import Message
 from telegram import User
 
+# Texts
+START_TEXT = f"""
+Efficiency\\, Coordination\\, Revolution\\—these are the core principles guiding {BOT_NAME}\\, your ultimate Telegram Group Management Bot powered by @rOpacity\\.
+
+With {BOT_NAME} by your side\\, enjoy seamless group coordination and effortless task assignments\\.
+
+>Embrace the power of streamlined group operations by adding {BOT_NAME} to your Telegram arsenal\\. Let\\'s revolutionize your group coordination experience together\\!
+"""
+HELP_TEXT = f"Choose from the list of modules and learn about the commands they have stored in them.\n\n"
+
+# Images
+START_IMG = "https://telegra.ph/file/1427a327ddc763613b753.jpg"
+HELP_IMG = "https://telegra.ph/file/97d93a01023c46937eabc.jpg"
+
+# Buttons
+BUTTON = [
+    [
+        InlineKeyboardButton(text="Recruit Me", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"),
+    
+        InlineKeyboardButton(text="Modules", callback_data="help_back"),
+    ],
+    [
+        InlineKeyboardButton(text="Developer", url=f"tg://user?id={MASTER}"),
+    ],
+]
+
 def get_readable_time(seconds: int) -> str:
     count = 0
     ping_time = ""
@@ -76,42 +102,6 @@ def get_readable_time(seconds: int) -> str:
 
     return ping_time
 
-
-PM_START_TEXT = """
-Hi {}, I am {}!
-powered by @iOpacity 
-
-A strong Group Management bot running on a high-speed server.
-Recruit me for smooth operations in your GCs 
-
-Check commands to get information about my modules ⚡
-"""
-
-buttons = [
-    [
-        InlineKeyboardButton(
-            text="Recruit Me",
-            url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
-        ),
-    
-        InlineKeyboardButton(text="Commands", callback_data="help_back"),
-    ],
-    [
-        InlineKeyboardButton(text="Support", url=f"https://t.me/{SUPPORT_CHAT}"),
-
-        InlineKeyboardButton(text="Developer", url=f"tg://user?id={OWNER_ID}"),
-    ],
-    [
-        InlineKeyboardButton(text="Opacity",
-url="https://t.me/iopacity"),
-    ],
-]
-
-HELP_STRINGS = f"""
-Choose the help module.
-Ask your doubts at [Support Chat](https://t.me/{SUPPORT_CHAT}
-
-All commands can be used with : /"""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -206,18 +196,15 @@ def start(update: Update, context: CallbackContext):
                 IMPORTED["Rules"].send_rules(update, args[0], from_pm=True)
 
         else:
-            first_name = update.effective_user.first_name
-            update.effective_message.reply_photo(START_IMG)
-            update.effective_message.reply_text(
-                PM_START_TEXT.format(escape_markdown(first_name), BOT_NAME),
-                reply_markup=InlineKeyboardMarkup(buttons),
+            update.effective_message.reply_photo(
+                photo=START_IMG,
+                caption=START_TEXT,
+                reply_markup=InlineKeyboardMarkup(BUTTON),
                 parse_mode=ParseMode.MARKDOWN,
-                timeout=60,
             )
     else:
-        update.effective_message.reply_photo(
-            START_IMG,
-            caption="Reporting, Chrollo is alive!\n<b>I have been active for:</b> <code>{}</code>".format(
+        update.effective_message.reply_text(
+            text="Reporting, Chrollo is alive!\n<b>Been Active For:</b> <code>{}</code>".format(
                 uptime
             ),
             parse_mode=ParseMode.HTML,
@@ -344,131 +331,6 @@ def help_button(update, context):
         pass
 
 
-def Fallen_about_callback(update: Update, context: CallbackContext):
-    query = update.callback_query
-    if query.data == "fallen_":
-        uptime = get_readable_time((time.time() - StartTime))
-        query.message.edit_text(
-            text=f"*ʜᴇʏ,*🥀\n  *ᴛʜɪs ɪs {BOT_NAME}*"
-            "\n*ᴀ ᴘᴏᴡᴇʀꜰᴜʟ ɢʀᴏᴜᴘ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʙᴏᴛ ʙᴜɪʟᴛ ᴛᴏ ʜᴇʟᴘ ʏᴏᴜ ᴍᴀɴᴀɢᴇ ʏᴏᴜʀ ɢʀᴏᴜᴘ ᴇᴀꜱɪʟʏ ᴀɴᴅ ᴛᴏ ᴘʀᴏᴛᴇᴄᴛ ʏᴏᴜʀ ɢʀᴏᴜᴘ ꜰʀᴏᴍ ꜱᴄᴀᴍᴍᴇʀꜱ ᴀɴᴅ ꜱᴘᴀᴍᴍᴇʀꜱ.*"
-            "\n*ᴡʀɪᴛᴛᴇɴ ɪɴ ᴩʏᴛʜᴏɴ ᴡɪᴛʜ sǫʟᴀʟᴄʜᴇᴍʏ ᴀɴᴅ ᴍᴏɴɢᴏᴅʙ ᴀs ᴅᴀᴛᴀʙᴀsᴇ.*"
-            "\n\n────────────────────"
-            f"\n*➻ ᴜᴩᴛɪᴍᴇ »* {uptime}"
-            f"\n*➻ ᴜsᴇʀs »* {sql.num_users()}"
-            f"\n*➻ ᴄʜᴀᴛs »* {sql.num_chats()}"
-            "\n────────────────────"
-            "\n\n➲  ɪ ᴄᴀɴ ʀᴇꜱᴛʀɪᴄᴛ ᴜꜱᴇʀꜱ."
-            "\n➲  ɪ ʜᴀᴠᴇ ᴀɴ ᴀᴅᴠᴀɴᴄᴇᴅ ᴀɴᴛɪ-ꜰʟᴏᴏᴅ ꜱʏꜱᴛᴇᴍ."
-            "\n➲  ɪ ᴄᴀɴ ɢʀᴇᴇᴛ ᴜꜱᴇʀꜱ ᴡɪᴛʜ ᴄᴜꜱᴛᴏᴍɪᴢᴀʙʟᴇ ᴡᴇʟᴄᴏᴍᴇ ᴍᴇꜱꜱᴀɢᴇꜱ ᴀɴᴅ ᴇᴠᴇɴ ꜱᴇᴛ ᴀ ɢʀᴏᴜᴘ'ꜱ ʀᴜʟᴇꜱ."
-            "\n➲  ɪ ᴄᴀɴ ᴡᴀʀɴ ᴜꜱᴇʀꜱ ᴜɴᴛɪʟ ᴛʜᴇʏ ʀᴇᴀᴄʜ ᴍᴀx ᴡᴀʀɴꜱ, ᴡɪᴛʜ ᴇᴀᴄʜ ᴘʀᴇᴅᴇꜰɪɴᴇᴅ ᴀᴄᴛɪᴏɴꜱ ꜱᴜᴄʜ ᴀꜱ ʙᴀɴ, ᴍᴜᴛᴇ, ᴋɪᴄᴋ, ᴇᴛᴄ."
-            "\n➲  ɪ ʜᴀᴠᴇ ᴀ ɴᴏᴛᴇ ᴋᴇᴇᴘɪɴɢ ꜱʏꜱᴛᴇᴍ, ʙʟᴀᴄᴋʟɪꜱᴛꜱ, ᴀɴᴅ ᴇᴠᴇɴ ᴘʀᴇᴅᴇᴛᴇʀᴍɪɴᴇᴅ ʀᴇᴘʟɪᴇꜱ ᴏɴ ᴄᴇʀᴛᴀɪɴ ᴋᴇʏᴡᴏʀᴅꜱ."
-            f"\n\n➻ ᴄʟɪᴄᴋ ᴏɴ ᴛʜᴇ ʙᴜᴛᴛᴏɴs ɢɪᴠᴇɴ ʙᴇʟᴏᴡ ғᴏʀ ɢᴇᴛᴛɪɴɢ ʙᴀsɪᴄ ʜᴇʟᴩ ᴀɴᴅ ɪɴғᴏ ᴀʙᴏᴜᴛ {BOT_NAME}.",
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="sᴜᴩᴩᴏʀᴛ", callback_data="fallen_support"
-                        ),
-                        InlineKeyboardButton(
-                            text="ᴄᴏᴍᴍᴀɴᴅs", callback_data="help_back"
-                        ),
-                    ],
-                    [
-                        InlineKeyboardButton(
-                            text="ᴅᴇᴠᴇʟᴏᴩᴇʀ", url=f"tg://user?id={OWNER_ID}"
-                        ),
-                        InlineKeyboardButton(
-                            text="sᴏᴜʀᴄᴇ",
-                            callback_data="source_",
-                        ),
-                    ],
-                    [
-                        InlineKeyboardButton(text="◁", callback_data="fallen_back"),
-                    ],
-                ]
-            ),
-        )
-    elif query.data == "fallen_support":
-        query.message.edit_text(
-            text="*๏ ᴄʟɪᴄᴋ ᴏɴ ᴛʜᴇ ʙᴜᴛᴛᴏɴs ɢɪᴠᴇɴ ʙᴇʟᴏᴡ ᴛᴏ ɢᴇᴛ ʜᴇʟᴩ ᴀɴᴅ ᴍᴏʀᴇ ɪɴғᴏʀᴍᴀᴛɪᴏɴ ᴀʙᴏᴜᴛ ᴍᴇ.*"
-            f"\n\nɪғ ʏᴏᴜ ғᴏᴜɴᴅ ᴀɴʏ ʙᴜɢ ɪɴ {BOT_NAME} ᴏʀ ɪғ ʏᴏᴜ ᴡᴀɴɴᴀ ɢɪᴠᴇ ғᴇᴇᴅʙᴀᴄᴋ ᴀʙᴏᴜᴛ ᴛʜᴇ {BOT_NAME}, ᴩʟᴇᴀsᴇ ʀᴇᴩᴏʀᴛ ɪᴛ ᴀᴛ sᴜᴩᴩᴏʀᴛ ᴄʜᴀᴛ.",
-            parse_mode=ParseMode.MARKDOWN,
-            reply_markup=InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="sᴜᴩᴩᴏʀᴛ", url=f"https://t.me/{SUPPORT_CHAT}"
-                        ),
-                        InlineKeyboardButton(
-                            text="ᴜᴩᴅᴀᴛᴇs", url=f"https://t.me/{SUPPORT_CHAT}"
-                        ),
-                    ],
-                    [
-                        InlineKeyboardButton(
-                            text="ᴅᴇᴠᴇʟᴏᴩᴇʀ", url=f"tg://user?id={OWNER_ID}"
-                        ),
-                        InlineKeyboardButton(
-                            text="ɢɪᴛʜᴜʙ",
-                            url="https://github.com/AnonymousX1025",
-                        ),
-                    ],
-                    [
-                        InlineKeyboardButton(text="◁", callback_data="fallen_"),
-                    ],
-                ]
-            ),
-        )
-    elif query.data == "fallen_back":
-        first_name = update.effective_user.first_name
-        query.message.edit_text(
-            PM_START_TEXT.format(escape_markdown(first_name), BOT_NAME),
-            reply_markup=InlineKeyboardMarkup(buttons),
-            parse_mode=ParseMode.MARKDOWN,
-            timeout=60,
-            disable_web_page_preview=True,
-        )
-
-
-def Source_about_callback(update: Update, context: CallbackContext):
-    query = update.callback_query
-    if query.data == "source_":
-        query.message.edit_text(
-            text=f"""
-*ʜᴇʏ,
- ᴛʜɪs ɪs {BOT_NAME},
-ᴀɴ ᴏᴩᴇɴ sᴏᴜʀᴄᴇ ᴛᴇʟᴇɢʀᴀᴍ ɢʀᴏᴜᴩ ᴍᴀɴᴀɢᴇᴍᴇɴᴛ ʙᴏᴛ.*
-
-ᴡʀɪᴛᴛᴇɴ ɪɴ ᴩʏᴛʜᴏɴ ᴡɪᴛʜ ᴛʜᴇ ʜᴇʟᴩ ᴏғ : [ᴛᴇʟᴇᴛʜᴏɴ](https://github.com/LonamiWebs/Telethon)
-[ᴩʏʀᴏɢʀᴀᴍ](https://github.com/pyrogram/pyrogram)
-[ᴩʏᴛʜᴏɴ-ᴛᴇʟᴇɢʀᴀᴍ-ʙᴏᴛ](https://github.com/python-telegram-bot/python-telegram-bot)
-ᴀɴᴅ ᴜsɪɴɢ [sǫʟᴀʟᴄʜᴇᴍʏ](https://www.sqlalchemy.org) ᴀɴᴅ [ᴍᴏɴɢᴏ](https://cloud.mongodb.com) ᴀs ᴅᴀᴛᴀʙᴀsᴇ.
-
-
-*ʜᴇʀᴇ ɪs ᴍʏ sᴏᴜʀᴄᴇ ᴄᴏᴅᴇ :* [ɢɪᴛʜᴜʙ](https://github.com/AnonymousX1025/FallenRobot)
-
-
-{BOT_NAME} ɪs ʟɪᴄᴇɴsᴇᴅ ᴜɴᴅᴇʀ ᴛʜᴇ [ᴍɪᴛ ʟɪᴄᴇɴsᴇ](https://github.com/AnonymousX1025/FallenRobot/blob/master/LICENSE).
-© 2022 - 2023 | [sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ](https://t.me/{SUPPORT_CHAT}), ᴀʟʟ ʀɪɢʜᴛs ʀᴇsᴇʀᴠᴇᴅ.
-""",
-            parse_mode=ParseMode.MARKDOWN,
-            disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="◁", callback_data="source_back")]]
-            ),
-        )
-    elif query.data == "source_back":
-        first_name = update.effective_user.first_name
-        query.message.edit_text(
-            PM_START_TEXT.format(escape_markdown(first_name), BOT_NAME),
-            reply_markup=InlineKeyboardMarkup(buttons),
-            parse_mode=ParseMode.MARKDOWN,
-            timeout=60,
-            disable_web_page_preview=True,
-        )
-
-
 def get_help(update: Update, context: CallbackContext):
     chat = update.effective_chat  # type: Optional[Chat]
     args = update.effective_message.text.split(None, 1)
@@ -494,20 +356,19 @@ def get_help(update: Update, context: CallbackContext):
             )
             return
         update.effective_message.reply_text(
-            "» Select an option -",
+            "Where do you want to open help keyboard?",
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
                         InlineKeyboardButton(
-                            text="Open in Private",
+                            text="In Private",
                             url="https://t.me/{}?start=help".format(
                                 context.bot.username
                             ),
-                        )
-                    ],
-                    [
+                        ),
+                    
                         InlineKeyboardButton(
-                            text="Open here",
+                            text="In Group",
                             callback_data="help_back",
                         )
                     ],
@@ -600,7 +461,7 @@ def settings_button(update: Update, context: CallbackContext):
                     [
                         [
                             InlineKeyboardButton(
-                                text="◁",
+                                text="Back",
                                 callback_data="stngs_back({})".format(chat_id),
                             )
                         ]
@@ -713,15 +574,10 @@ def migrate_chats(update: Update, context: CallbackContext):
 def main():
     if SUPPORT_CHAT is not None and isinstance(SUPPORT_CHAT, str):
         try:
-            dispatcher.bot.send_photo(
-                chat_id=f"@{SUPPORT_CHAT}",
-                photo="https://telegra.ph/file/26ef5a0b523c9a52977ad.jpg",
-                caption=f"""
-⚡ Successfully Rebooted,
-I am alive and working now ☄️
-Support - @IOSupportGroup
-""",
-                parse_mode=ParseMode.MARKDOWN,
+            dispatcher.bot.send_message(
+                text="the boot was successful\\, I'm functional now\n>Serving Users as usual",
+                chat_id=-1002125745199,
+                parse_mode=ParseMode.MARKDOWN_V2,
             )
         except Unauthorized:
             LOGGER.warning(
