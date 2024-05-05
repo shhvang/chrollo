@@ -54,7 +54,7 @@ from telegram import User
 
 # Texts
 START_TEXT = f"""
-Efficiency\\, Coordination\\, Revolution\\—these are the core principles guiding {BOT_NAME}\\, your ultimate Telegram Group Management Bot powered by @rOpacity\\.
+Efficiency\\, Coordination\\, Revolution\\—these are the core principles guiding {BOT_NAME}\\, your ultimate Telegram Group Management Bot powered by @IOpacity\\.
 
 With {BOT_NAME} by your side\\, enjoy seamless group coordination and effortless task assignments\\.
 
@@ -200,7 +200,7 @@ def start(update: Update, context: CallbackContext):
                 photo=START_IMG,
                 caption=START_TEXT,
                 reply_markup=InlineKeyboardMarkup(BUTTON),
-                parse_mode=ParseMode.MARKDOWN,
+                parse_mode=ParseMode.MARKDOWN_V2,
             )
     else:
         update.effective_message.reply_text(
@@ -282,7 +282,7 @@ def help_button(update, context):
         if mod_match:
             module = mod_match.group(1)
             text = (
-                "» *{}* ⼀\n".format(
+                "*{}* ⼀\n".format(
                     HELPABLE[module].__mod_name__
                 )
                 + HELPABLE[module].__help__
@@ -299,7 +299,7 @@ def help_button(update, context):
         elif prev_match:
             curr_page = int(prev_match.group(1))
             query.message.edit_text(
-                text=HELP_STRINGS,
+                text=HELP_TEXT,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
                     paginate_modules(curr_page - 1, HELPABLE, "help")
@@ -309,7 +309,7 @@ def help_button(update, context):
         elif next_match:
             next_page = int(next_match.group(1))
             query.message.edit_text(
-                text=HELP_STRINGS,
+                text=HELP_TEXT,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
                     paginate_modules(next_page + 1, HELPABLE, "help")
@@ -318,7 +318,7 @@ def help_button(update, context):
 
         elif back_match:
             query.message.edit_text(
-                text=HELP_STRINGS,
+                text=HELP_TEXT,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
                     paginate_modules(0, HELPABLE, "help")
