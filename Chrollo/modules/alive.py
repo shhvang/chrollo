@@ -1,7 +1,7 @@
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 
-from Chrollo import ALIVE_IMG, ALIVE_MSG, BOT_USERNAME, SUPPORT_CHAT, app
+from Chrollo import ALIVE_IMG, ALIVE_MSG, BOT_USERNAME, SUPPORT_CHAT, pbot
 
 alive_button = [
     [
@@ -10,7 +10,7 @@ alive_button = [
     ],
 ]
 
-@app.on_message(filters.command("alive"))
+@pbot.on_message(filters.command("alive"))
 async def alive(_, message: Message):
     await message.reply_photo(
         ALIVE_IMG,
