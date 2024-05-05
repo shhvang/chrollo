@@ -40,7 +40,10 @@ def define_word(update, context):
         example = data["meanings"][0]["definitions"][0]["example"]
     except KeyError:
         example = "No example found for this word."  # Set a default value or message
-    synonyms = ", ".join([synonym["sense"] for synonym in data["synonyms"]])
+    try:
+        synonyms = ", ".join([synonym["sense"] for synonym in data["synonyms"]])
+    except KeyError:
+        synonyms = "No synonyms found."
 
     # Build response message
     message = f"**Definition of {word.title()}**\n\n{definition}\n\n**Example:**\n{example}\n\n**Synonyms:**\n{synonyms}"
