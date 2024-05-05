@@ -74,7 +74,7 @@ BUTTON = [
         InlineKeyboardButton(text="Modules", callback_data="help_back"),
     ],
     [
-        InlineKeyboardButton(text="Developer", url=f"tg://user?id={MASTER}"),
+        InlineKeyboardButton(text="Developer", url=f"tg://user?id={OWNER_ID}"),
     ],
 ]
 
