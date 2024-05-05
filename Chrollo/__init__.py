@@ -155,6 +155,7 @@ ALIVE_MSG = "Chrollo is online!"
 ALIVE_IMG = "https://telegra.ph/file/d623ac53ee21f196bd8c4.jpg"
 
 START_IMG = "https://telegra.ph/file/506b055da5642e1517acc.jpg"
+SUPPORT_ID = -1002125745199
 
 pbot = Client("Chrollo", api_id=API_ID, api_hash=API_HASH, bot_token=TOKEN)
 dispatcher = updater.dispatcher

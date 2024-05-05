@@ -879,27 +879,38 @@ def adminlist(update, context):
 
 
 __help__ = """
-*User Commands*:
-» /admins - list of admins in the chat
-» /pinned - to get the current pinned message.
+> Bot needs repective admin rights to perform certain functions.
 
-*The Following Commands are Admins only:* 
-» /pin - silently pins the message replied to - add `'loud'` or `'notify'` to give notifs to users
-» /unpin - unpins the currently pinned message
-» /invitelink - gets invitelink
-» /promote - promotes the user replied to
-» /lowpromote - promotes the user replied to with half rights
-» /fullpromote - promotes the user replied to with full rights
-» /demote - demotes the user replied to
-» /title <title here> - sets a custom title for an admin that the bot promoted
-» /admincache - force refresh the admins list
-» /del - deletes the message you replied to
-» /purge - deletes all messages between this and the replied to message.
-» /purge <integer X> - deletes the replied message, and X messages following it if replied to a message.
-» /setgtitle <text> - set group title
-» /setgpic - reply to an image to set as group photo
-» /setdesc - Set group description
-» /setsticker - Set group sticker
+*──「 Ban/Unban 」──*
+*->* /ban or /unban - _Ban or unban the replied user_
+*->* /tban `time` - _Ban a user for a certain time period_
+-> /sban - _Silently ban a user_
+
+*──「 Promote/Demote 」──*
+*->* /promote or /demote - _Promote or Demote the replied user_
+*->* /fullpromote - _Promote the user with full rights_
+*->* /title `text` - _Give the user a custom title_
+
+*──「 Pin/Unpin 」──*
+*->* /pin or /unpin - _Pin or Unpin the replied message_
+*->* /unpinall - _Unpin all pinned messages (Owner Only)_
+
+*──「 Kick 」──*
+*->* /kick - _Kick the replied user from the group_
+*->* /kickme - _Kicks the member who issued the command_
+
+*──「 Mute/Unmute 」──*
+*->* /mute or /unmute - _Mute or Unmute the replied user_
+*->* /tmute `time` - _Mute a user for a certain time period_
+
+*──「 Extras 」──*
+*->* /admins or /staff - _List of admins inside the group_
+*->* /admincache - _Chrollo refreshes his memory to check for newly appointed admins_
+*->* /setdesc - _Set Group Description_
+*->* /setsticker - _Set Group Sticker_
+*->* /setgpic - _Set Group Picture_
+*->* /delgpic - _Delete Group Picture_
+*->* /setgtitle - _Set Group Title_
 """
 
 SET_DESC_HANDLER = CommandHandler("setdesc", set_desc, run_async=True)
