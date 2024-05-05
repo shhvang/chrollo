@@ -36,7 +36,10 @@ def define_word(update, context):
     # Parse JSON response (adjust key names based on specific API)
     data = response.json()[0]
     definition = data["meanings"][0]["definitions"][0]["definition"]
-    example = data["meanings"][0]["definitions"][0]["example"]
+    try:
+        example = data["meanings"][0]["definitions"][0]["example"]
+    except KeyError:
+        example = "No example found for this word."  # Set a default value or message
     synonyms = ", ".join([synonym["sense"] for synonym in data["synonyms"]])
 
     # Build response message
