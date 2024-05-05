@@ -14,9 +14,8 @@
    "addons": [
       {
          "options": {
-            "version": "12"
-         },
-         "plan": "heroku-postgresql"
+            "version": "16"
+         }
       }
    ],
    "env": {
@@ -33,11 +32,6 @@
       "ALLOW_EXCL": {
          "description": "Set this to True if you want ! to be a command prefix along with /. Recommended is True",
          "value": "True"
-      },
-      "CASH_API_KEY": {
-         "description": "Required for currency converter. Get yours from https://www.alphavantage.co/support/#api-key",
-         "required": true,
-         "value": ""
       },
       "DEL_CMDS": {
          "description": "Set this to True if you want to delete command messages from users who don't have the perms to run that command.",
@@ -73,13 +67,13 @@
          "required": true,
          "value": "IOSupportGroup"
       },
-      "TIME_API_KEY": {
-         "description": "Required for timezone information. Get yours from https://timezonedb.com/api",
+      "TOKEN": {
+         "description": "Get bot token from @BotFather on TG",
          "required": true,
          "value": ""
       },
-      "TOKEN": {
-         "description": "Get bot token from @BotFather on TG",
+      "DATABASE_URL": {
+         "description": "Sql URL",
          "required": true,
          "value": ""
       }
