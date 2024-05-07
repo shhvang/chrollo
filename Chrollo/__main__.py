@@ -168,7 +168,7 @@ def start(update: Update, context: CallbackContext):
     if update.effective_chat.type == "private":
         if len(args) >= 1:
             if args[0].lower() == "help":
-                send_help(update.effective_chat.id, HELP_STRINGS)
+                send_help(update.effective_chat.id, HELP_TEXT)
             elif args[0].lower().startswith("ghelp_"):
                 mod = args[0].lower().split("_", 1)[1]
                 if not HELPABLE.get(mod, False):
@@ -389,7 +389,7 @@ def get_help(update: Update, context: CallbackContext):
         )
 
     else:
-        send_help(chat.id, HELP_STRINGS)
+        send_help(chat.id, HELP_TEXT)
 
 
 def send_settings(chat_id, user_id, user=False):
