@@ -275,6 +275,7 @@ def help_button(update, context):
     prev_match = re.match(r"help_prev\((.+?)\)", query.data)
     next_match = re.match(r"help_next\((.+?)\)", query.data)
     back_match = re.match(r"help_back", query.data)
+    group_match = re.match(r"help_group", query.data)
 
     print(query.message.chat.id)
 
@@ -317,6 +318,14 @@ def help_button(update, context):
             query.message.edit_caption(
                 caption=HELP_TEXT,
                 parse_mode=ParseMode.MARKDOWN,
+                reply_markup=InlineKeyboardMarkup(
+                    paginate_modules(0, HELPABLE, "help")
+                ),
+            )
+        elif group_match:
+            query.message.edit_text(
+                text=HELP_TEXT,
+                parse_mode=ParseMode.Markdown,
                 reply_markup=InlineKeyboardMarkup(
                     paginate_modules(0, HELPABLE, "help")
                 ),
@@ -364,7 +373,7 @@ def get_help(update: Update, context: CallbackContext):
                     
                         InlineKeyboardButton(
                             text="In Group",
-                            callback_data="help_back",
+                            callback_data="help_group",
                         )
                     ],
                 ]
