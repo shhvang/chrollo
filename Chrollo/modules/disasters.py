@@ -549,14 +549,11 @@ def devlist(update: Update, context: CallbackContext):
             pass
     m.edit_text(reply, parse_mode=ParseMode.HTML)
 
-@whitelist_plus
+
 def authorities(update: Update, context: CallbackContext):
     bot = context.bot
     message = update.effective_message
-    try:
-        reply = f"<u><b>Authorities</b><u>\n\n<b>Author of the Creation 🌱</b>\n刻 [𝘚𝘩𝘪𝘷𝘢𝘯𝘨](https://t.me/shhvang)\n ⼀ Owner\n\n"
-    except TelegramError:
-        pass
+    reply = f"<u><b>Authorities</b><u>\n\n<b>Author</b>\n[𝘚𝘩𝘪𝘷𝘢𝘯𝘨](https://t.me/shhvang)\n ⼀ Owner\n\n"
         
     true_dev = list(set(DEV_USERS) - {OWNER_ID})
     reply += "<b>⼀ Dimensions</b>\n"
@@ -569,7 +566,7 @@ def authorities(update: Update, context: CallbackContext):
             pass
     
     true_sudo = list(set(DRAGONS) - set(DEV_USERS))
-    reply += "<b>\n\n⼀ Monarchs</b>\n"
+    reply += "<b>\n\n⼀ Dragons</b>\n"
     for each_user in true_sudo:
         user_id = int(each_user)
         try:
