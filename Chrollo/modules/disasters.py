@@ -549,11 +549,11 @@ def devlist(update: Update, context: CallbackContext):
             pass
     m.edit_text(reply, parse_mode=ParseMode.HTML)
 
-
+@whitelist_plus
 def authorities(update: Update, context: CallbackContext):
     bot = context.bot
     message = update.effective_message
-    reply = f"<u><b>Authorities</b><u>\n\n<b>Author</b>\n[𝘚𝘩𝘪𝘷𝘢𝘯𝘨](https://t.me/shhvang)\n ⼀ Owner\n\n"
+    reply = f"<b>Authorities</b>\n\n<b>Author</b>\n[𝘚𝘩𝘪𝘷𝘢𝘯𝘨](https://t.me/shhvang)\n ⼀ Owner\n\n"
         
     true_dev = list(set(DEV_USERS) - {OWNER_ID})
     reply += "<b>⼀ Dimensions</b>\n"
@@ -606,91 +606,93 @@ def authorities(update: Update, context: CallbackContext):
 
           
 __help__ = f"""
+*──「 Special Users 」──*
+
 *⚠️ Notice:*
-Commands listed here only work for users with special access are mainly used for troubleshooting, debugging purposes.
-Group admins/group owners do not need these commands.
+Commands listed here are designed for users with special access and are mainly used for troubleshooting and debugging purposes. Group admins and group owners do not require these commands.
 
-*List all special users:*
+*List of Special Users:*
 
- ❍ /authority*:* List of All Authorities
- ❍ /monarchs*:* Lists all Monarchs (Dragons)
- ❍ /knights*:* Lists all Knights (Demons)
- ❍ /ronins*:* Lists all Ronins (Tigers)
- ❍ /ninjas*:* Lists all Ninjas (Wolves)
- ❍ /dimensions*:* List of the Dimensions (Devs)
- ❍ /addsudo*:* Adds a user to Dragon
- ❍ /adddemon*:* Adds a user to Demon
- ❍ /addtiger*:* Adds a user to Tiger
- ❍ /addwolf*:* Adds a user to Wolf
- ❍ `Add dev doesnt exist, devs should know how to add themselves`
+-> */authority:* _List of All Authorities_  
+-> */monarchs:* _Lists all Monarchs (Dragons)_  
+-> */knights:* _Lists all Knights (Demons)_  
+-> */ronins:* _Lists all Ronins (Tigers)_  
+-> */ninjas:* _Lists all Ninjas (Wolves)_  
+-> */dimensions:* _List of the Dimensions (Devs)_  
+-> */addsudo:* _Adds a user to Dragon_  
+-> */adddemon:* _Adds a user to Demon_  
+-> */addtiger:* _Adds a user to Tiger_  
+-> */addwolf:* _Adds a user to Wolf_  
+-> _Add dev doesn't exist, devs should know how to add themselves._
 
-*Broadcast: (Bot owner only)*
-*Note:* This supports basic markdown
- ❍ /broadcastall*:* Broadcasts everywhere
- ❍ /broadcastusers*:* Broadcasts too all users
- ❍ /broadcastgroups*:* Broadcasts too all groups
+*──「 Broadcast 」──*
+_Note: This supports basic markdown_  
+-> */broadcastall:* _Broadcasts everywhere_  
+-> */broadcastusers:* _Broadcasts to all users_  
+-> */broadcastgroups:* _Broadcasts to all groups_
 
-*Groups Info:*
- ❍ /groups*:* List the groups with Name, ID, members count as a txt
- ❍ /leave <ID>*:* Leave the group, ID must have hyphen
- ❍ /stats*:* Shows overall bot stats
- ❍ /getchats*:* Gets a list of group names the user has been seen in. Bot owner only
- ❍ /ginfo username/link/ID*:* Pulls info panel for entire group
+*──「 Groups Info 」──*
+-> */groups:* _List the groups with Name, ID, and member count as a txt_  
+-> */leave <ID>:* _Leave the group (ID must have a hyphen)_  
+-> */stats:* _Shows overall bot stats_  
+-> */getchats:* _Gets a list of group names the user has been seen in (Bot owner only)_  
+-> */ginfo username/link/ID:* _Pulls info panel for the entire group_
 
-*Access control:* 
- ❍ /ignore*:* Blacklists a user from using the bot entirely
- ❍ /lockdown <off/on>*:* Toggles bot adding to groups
- ❍ /notice*:* Removes user from blacklist
- ❍ /ignoredlist*:* Lists ignored users
+*──「 Access Control 」──*
+-> */ignore:* _Blacklists a user from using the bot entirely_  
+-> */lockdown <off/on>:* _Toggles bot adding to groups_  
+-> */notice:* _Removes a user from the blacklist_  
+-> */ignoredlist:* _Lists ignored users_
 
-*Speedtest:*
- ❍ /speedtest*:* Runs a speedtest and gives you 2 options to choose from, text or image output
+*──「 Speedtest 」──*
+-> */speedtest:* _Runs a speedtest and gives you 2 options to choose from, text, or image output_
 
-*Module loading:*
- ❍ /listmodules*:* Lists names of all modules
- ❍ /load modulename*:* Loads the said module to memory without restarting.
- ❍ /unload modulename*:* Loads the said module from memory without restarting memory without restarting the bot 
+*──「 Module Loading 」──*
+-> */listmodules:* _Lists names of all modules_  
+-> */load modulename:* _Loads the said module to memory without restarting_  
+-> */unload modulename:* _Loads the said module from memory without restarting the bot_
 
-*Remote commands:*
- ❍ /rban*:* user group*:* Remote ban
- ❍ /runban*:* user group*:* Remote un-ban
- ❍ /rpunch*:* user group*:* Remote punch
- ❍ /rmute*:* user group*:* Remote mute
- ❍ /runmute*:* user group*:* Remote un-mute
+*──「 Remote Commands 」──*
+-> */rban user group:* _Remote ban_  
+-> */runban user group:* _Remote un-ban_  
+-> */rpunch user group:* _Remote punch_  
+-> */rmute user group:* _Remote mute_  
+-> */runmute user group:* _Remote un-mute_
 
-*Windows self hosted only:*
- ❍ /reboot*:* Restarts the bots service
- ❍ /gitpull*:* Pulls the repo and then restarts the bots service
- 
-*Debugging and Shell:* 
- ❍ /debug <on/off>*:* Logs commands to updates.txt
- ❍ /logs*:* Run this in support group to get logs in pm
- ❍ /eval*:* Self explanatory
- ❍ /sh*:* Runs shell command
- ❍ /shell*:* Runs shell command
- ❍ /clearlocals*:* As the name goes
- ❍ /dbcleanup*:* Removes deleted accs and groups from db
- ❍ /py*:* Runs python code
- 
-*Global Bans:*
- ❍ /gban <id> <reason>*:* Gbans the user, works by reply too
- ❍ /ungban*:* Ungbans the user, same usage as gban
- ❍ /gbanlist*:* Outputs a list of gbanned users
+*──「 Windows Self-hosted Only 」──*
+-> */reboot:* _Restarts the bot's service_  
+-> */gitpull:* _Pulls the repo and then restarts the bot's service_
 
-*Global Blue Text*
- ❍ /gignoreblue*:* <word>*:* Globally ignore bluetext cleaning of saved word across Chrollo Robot.
- ❍ /ungignoreblue*:* <word>*:* Remove said command from global cleaning list
+*──「 Debugging and Shell 」──*
+-> */debug <on/off>:* _Logs commands to updates.txt_  
+-> */logs:* _Run this in the support group to get logs in pm_  
+-> */eval:* _Self-explanatory_  
+-> */sh:* _Runs a shell command_  
+-> */shell:* _Runs a shell command_  
+-> */clearlocals:* _As the name suggests_  
+-> */dbcleanup:* _Removes deleted accounts and groups from the database_  
+-> */py:* _Runs Python code_
 
-*Heroku Settings*
-*Owner only*
- ❍ /usage*:* Check your heroku dyno hours remaining.
- ❍ /see var <var>*:* Get your existing varibles, use it only on your private group!
- ❍ /set var <newvar> <vavariable>*:* Add new variable or update existing value variable.
- ❍ /del var <var>*:* Delete existing variable.
- ❍ /logs Get heroku dyno logs.
+*──「 Global Bans 」──*
+-> */gban <id> <reason>:* _Gbans the user, works by reply too_  
+-> */ungban:* _Ungbans the user, same usage as gban_  
+-> */gbanlist:* _Outputs a list of gbanned users_
 
-`⚠️ Read from top`
+*──「 Global Blue Text 」──*
+-> */gignoreblue <word>:* _Globally ignore bluetext cleaning of saved word across Chrollo Robot_  
+-> */ungignoreblue <word>:* _Remove said command from global cleaning list_
+
+*──「 Heroku Settings 」──*
+_Owner only_  
+-> */usage:* _Check your Heroku dyno hours remaining_  
+-> */see var <var>:* _Get your existing variables, use it only in your private group!_  
+-> */set var <newvar> <variable>:* _Add a new variable or update an existing variable's value_  
+-> */del var <var>:* _Delete an existing variable_  
+-> */logs:* _Get Heroku dyno logs_
+
+_⚠️ Read from top_  
 Visit @{SUPPORT_CHAT} for more information.
+
 """
 
 AUTHORITY_HANDLER = CommandHandler(("authority", "authorities"), authorities, run_async=True)

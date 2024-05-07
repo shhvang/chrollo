@@ -879,7 +879,7 @@ def adminlist(update, context):
 
 
 __help__ = """
-> Bot needs repective admin rights to perform certain functions.
+Bot needs repective admin rights to perform certain functions.
 
 *──「 Ban/Unban 」──*
 *->* /ban or /unban - _Ban or unban the replied user_
