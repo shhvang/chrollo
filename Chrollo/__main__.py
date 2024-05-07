@@ -325,7 +325,7 @@ def help_button(update, context):
         elif group_match:
             query.message.edit_text(
                 text=HELP_TEXT,
-                parse_mode=ParseMode.Markdown,
+                parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
                     paginate_modules(0, HELPABLE, "help")
                 ),
