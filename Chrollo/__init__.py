@@ -139,12 +139,8 @@ else:
 DRAGONS.add(6865772783) # Ishant
 DEV_USERS.add(6294805935) # ""
 DRAGONS.add(5552153244) # Shivang
-DRAGONS.add(5080506262) # Eren
-DRAGONS.add(6140345652) # Pahadi
 DEV_USERS.add(6142070797) # Aeth
-DEV_USERS.add(1753314787) # POL
 DRAGONS.add(6034028784) # RRR
-TIGERS.add(1264657553) 
 
 updater = tg.Updater(TOKEN, workers=WORKERS, use_context=True)
 telethn = TelegramClient("chrollo", API_ID, API_HASH)
