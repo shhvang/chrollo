@@ -97,19 +97,16 @@ QUOTES = [
     "The silence of death is the only true peace\\."
 ]
 
-random_quote = random.choice(QUOTES)
-UPT = get_readable_time((time.time() - StartTime))
-
 START_TEXT = f"""
 *Chrollo*:
 >Welcome\\! Dear Apprentice\\,
->{random_quote}
+>{}
 
 I am called _Chrollo Lucilfer_\\, leader of the Phantom Troupe\\. My existence is a testament to the chaos that lurks in the shadows\\.
 You may call me for help anytime by typing /help\\.
 
 Recruit me to your arsenal\\!
-[\\>] Been active for: `{UPT}`
+[\\>] Been active for: `{}`
 """
 
 HELP_TEXT = "Choose from the list of modules and learn about the commands they have stored in them.\n\n"
@@ -188,6 +185,7 @@ def send_help(chat_id, text, keyboard=None):
 
 
 def start(update: Update, context: CallbackContext):
+    random_quote = random.choice(QUOTES)
     args = context.args
     uptime = get_readable_time((time.time() - StartTime))
     if update.effective_chat.type == "private":
@@ -222,7 +220,7 @@ def start(update: Update, context: CallbackContext):
 
         else:
             update.effective_message.reply_text(
-                text=START_TEXT,
+                text=(START_TEXT).format(random_quote, uptime),
                 reply_markup=InlineKeyboardMarkup(BUTTON),
                 parse_mode=ParseMode.MARKDOWN_V2,
             )
