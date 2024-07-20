@@ -108,7 +108,7 @@ START_TEXT = f"""
 I am called _Chrollo Lucilfer_\\, leader of the Phantom Troupe\\. My existence is a testament to the chaos that lurks in the shadows\\.
 You may call me for help anytime by typing /help\\.
 
-Recruit me to your arsenal!
+Recruit me to your arsenal\\!
 [\\>] Been active for: \\`{UPT}\\`
 """
 
