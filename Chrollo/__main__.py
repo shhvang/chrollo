@@ -2,6 +2,7 @@ import importlib
 import json
 import re
 import time
+import random
 from platform import python_version as y
 from sys import argv
 
@@ -53,14 +54,39 @@ from telegram import Message
 from telegram import User
 
 # Texts
+QUOTES = [
+    "Time is a subjective concept\\.",
+    "If I ignore a friend I have the ability to help\\, wouldn\\’t I be betraying him\\?",
+    "I\\’ve always gone where the wind blows me\\.",
+    "No matter what you accomplish\\, you can\\’t be happy while stealing from others\\.",
+    "You can do whatever you want\\, but never go against the will of the Troupe\\.",
+    "We will definitely steal the treasures\\.",
+    "Sometimes\\, we must fight against those we love and care about\\.",
+    "I am the leader of the Phantom Troupe\\. The memory of people who have died doesn\\'t go away\\.",
+    "People who can\\’t throw something important away can never hope to change anything\\.",
+    "Humans are so strange. When they suffer\\, they can grow stronger\\.",
+    "In order to obtain something\\, you must be willing to pay the price\\.",
+    "I don\\'t care who I fight\\. I\\’ll crush anyone who gets in my way\\.",
+    "Even if we are destined to meet the same fate\\, I am not afraid\\.",
+    "The silence of death is the only true peace\\."
+]
+
+random_quote = random.choice(quotes)
+UPT = get_readable_time((time.time() - StartTime))
+
 START_TEXT = f"""
-Efficiency\\, Coordination\\, Revolution\\—these are the core principles guiding {BOT_NAME}\\, your ultimate Telegram Group Management Bot powered by @IOpacity\\.
+*Chrollo*:
+>Welcome\\! Dear Apprentice\\,
+>{random_quote}
 
-With {BOT_NAME} by your side\\, enjoy seamless group coordination and effortless task assignments\\.
+I am called _Chrollo Lucilfer_\\, leader of the Phantom Troupe\\. My existence is a testament to the chaos that lurks in the shadows\\.
+You may call me for help anytime by typing /help\\.
 
->Embrace the power of streamlined group operations by adding {BOT_NAME} to your Telegram arsenal\\. Let\\'s revolutionize your group coordination experience together\\!
+Recruit me to your arsenal!
+[\\>] Been active for: \\`{UPT}\\`
 """
-HELP_TEXT = f"Choose from the list of modules and learn about the commands they have stored in them.\n\n"
+
+HELP_TEXT = "Choose from the list of modules and learn about the commands they have stored in them.\n\n"
 
 # Images
 START_IMG = "https://telegra.ph/file/1427a327ddc763613b753.jpg"
@@ -70,11 +96,7 @@ HELP_IMG = "https://telegra.ph/file/97d93a01023c46937eabc.jpg"
 BUTTON = [
     [
         InlineKeyboardButton(text="Recruit Me", url=f"https://t.me/{BOT_USERNAME}?startgroup=true"),
-    
-        InlineKeyboardButton(text="Modules", callback_data="help_back"),
-    ],
-    [
-        InlineKeyboardButton(text="Developer", url=f"tg://user?id=6535881518"),
+        InlineKeyboardButton(text="Support", url="https://t.me/IOSupportChat"),
     ],
 ]
 
@@ -196,9 +218,8 @@ def start(update: Update, context: CallbackContext):
                 IMPORTED["Rules"].send_rules(update, args[0], from_pm=True)
 
         else:
-            update.effective_message.reply_photo(
-                photo=START_IMG,
-                caption=START_TEXT,
+            update.effective_message.reply_text(
+                text=START_TEXT
                 reply_markup=InlineKeyboardMarkup(BUTTON),
                 parse_mode=ParseMode.MARKDOWN_V2,
             )
@@ -286,8 +307,8 @@ def help_button(update, context):
                 "*{}* :\n".format(HELPABLE[module].__mod_name__)
                 + HELPABLE[module].__help__
             )
-            query.message.edit_caption(
-                caption=text,
+            query.message.edit_text(
+                text=text,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
                     [[InlineKeyboardButton(text="Retreat", callback_data="help_back")]]
@@ -296,8 +317,8 @@ def help_button(update, context):
 
         elif prev_match:
             curr_page = int(prev_match.group(1))
-            query.message.edit_caption(
-                caption=HELP_TEXT,
+            query.message.edi_text(
+                text=HELP_TEXT,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
                     paginate_modules(curr_page - 1, HELPABLE, "help")
@@ -306,8 +327,8 @@ def help_button(update, context):
 
         elif next_match:
             next_page = int(next_match.group(1))
-            query.message.edit_caption(
-                caption=HELP_TEXT,
+            query.message.edit_text(
+                text=HELP_TEXT,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
                     paginate_modules(next_page + 1, HELPABLE, "help")
@@ -315,8 +336,8 @@ def help_button(update, context):
             )
 
         elif back_match:
-            query.message.edit_caption(
-                caption=HELP_TEXT,
+            query.message.edit_text(
+                text=HELP_TEXT,
                 parse_mode=ParseMode.MARKDOWN,
                 reply_markup=InlineKeyboardMarkup(
                     paginate_modules(0, HELPABLE, "help")
