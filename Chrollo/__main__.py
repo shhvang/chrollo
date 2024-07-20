@@ -219,7 +219,7 @@ def start(update: Update, context: CallbackContext):
 
         else:
             update.effective_message.reply_text(
-                text=START_TEXT
+                text=START_TEXT,
                 reply_markup=InlineKeyboardMarkup(BUTTON),
                 parse_mode=ParseMode.MARKDOWN_V2,
             )
