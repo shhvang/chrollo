@@ -82,17 +82,17 @@ def get_readable_time(seconds: int) -> str:
 # Texts
 QUOTES = [
     "Time is a subjective concept\\.",
-    "If I ignore a friend I have the ability to help\\, wouldn\\’t I be betraying him\\?",
-    "I\\’ve always gone where the wind blows me\\.",
-    "No matter what you accomplish\\, you can\\’t be happy while stealing from others\\.",
+    "If I ignore a friend I have the ability to help\\, wouldn’t I be betraying him\\?",
+    "I’ve always gone where the wind blows me\\.",
+    "No matter what you accomplish\\, you can’t be happy while stealing from others\\.",
     "You can do whatever you want\\, but never go against the will of the Troupe\\.",
     "We will definitely steal the treasures\\.",
     "Sometimes\\, we must fight against those we love and care about\\.",
-    "I am the leader of the Phantom Troupe\\. The memory of people who have died doesn\\'t go away\\.",
-    "People who can\\’t throw something important away can never hope to change anything\\.",
+    "I am the leader of the Phantom Troupe\\. The memory of people who have died doesn't go away\\.",
+    "People who can’t throw something important away can never hope to change anything\\.",
     "Humans are so strange. When they suffer\\, they can grow stronger\\.",
     "In order to obtain something\\, you must be willing to pay the price\\.",
-    "I don\\'t care who I fight\\. I\\’ll crush anyone who gets in my way\\.",
+    "I don't care who I fight\\. I’ll crush anyone who gets in my way\\.",
     "Even if we are destined to meet the same fate\\, I am not afraid\\.",
     "The silence of death is the only true peace\\."
 ]
@@ -109,7 +109,7 @@ I am called _Chrollo Lucilfer_\\, leader of the Phantom Troupe\\. My existence i
 You may call me for help anytime by typing /help\\.
 
 Recruit me to your arsenal\\!
-[\\>] Been active for: \\`{UPT}\\`
+[\\>] Been active for: `{UPT}`
 """
 
 HELP_TEXT = "Choose from the list of modules and learn about the commands they have stored in them.\n\n"
