@@ -97,7 +97,7 @@ QUOTES = [
     "The silence of death is the only true peace\\."
 ]
 
-START_TEXT = f"""
+START_TEXT = """
 *Chrollo*:
 >Welcome\\! Dear Apprentice\\,
 >{}
