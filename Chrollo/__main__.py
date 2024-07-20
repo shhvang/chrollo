@@ -71,7 +71,7 @@ QUOTES = [
     "The silence of death is the only true peace\\."
 ]
 
-random_quote = random.choice(quotes)
+random_quote = random.choice(QUOTES)
 UPT = get_readable_time((time.time() - StartTime))
 
 START_TEXT = f"""
