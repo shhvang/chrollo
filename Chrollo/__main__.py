@@ -90,7 +90,7 @@ QUOTES = [
     "Sometimes\\, we must fight against those we love and care about\\.",
     "I am the leader of the Phantom Troupe\\. The memory of people who have died doesn't go away\\.",
     "People who can’t throw something important away can never hope to change anything\\.",
-    "Humans are so strange. When they suffer\\, they can grow stronger\\.",
+    "Humans are so strange\\. When they suffer\\, they can grow stronger\\.",
     "In order to obtain something\\, you must be willing to pay the price\\.",
     "I don't care who I fight\\. I’ll crush anyone who gets in my way\\.",
     "Even if we are destined to meet the same fate\\, I am not afraid\\.",
